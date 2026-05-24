@@ -1,0 +1,52 @@
+# On-merge index rebuild.
+#
+# Triggers whenever ``main`` receives a change under ``entries/``,
+# regenerates ``registry.yaml`` from the current set of entries, and
+# commits the result back if anything actually changed.  Without
+# this, contributors would have to remember to rebuild + commit the
+# index in their PR, and forgetting would silently desync the
+# generated file from its source.
+
+name: build-index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "entries/**"
+      - "scripts/build_index.mjs"
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Need to push back to main, so request a token that allows it.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install root deps
+        run: npm ci
+
+      - name: Rebuild registry.yaml
+        run: node scripts/build_index.mjs
+
+      - name: Commit + push if changed
+        run: |
+          if git diff --quiet registry.yaml; then
+            echo "No changes to registry.yaml."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add registry.yaml
+          git commit -m "chore(index): regenerate registry.yaml [skip ci]"
+          git push

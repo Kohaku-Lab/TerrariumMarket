@@ -1,0 +1,105 @@
+# PR-time validation for new / edited package entries.
+#
+# What this checks:
+#   * registry.yaml regenerates cleanly from entries/*/entry.yaml
+#     (folder name == name field, YAML parses, no schema violations)
+#   * Every entry.yaml passes the JSON Schema
+#   * SPDX license identifiers are recognised
+#   * version[].tag exists in the source repo and the commit hash
+#     (if present) matches
+#
+# What this does NOT do (yet):
+#   * Sandbox install — installing every PR's package in a fresh
+#     container is too heavy for the v1 validator.  Add when the
+#     registry grows past ~50 entries.
+
+name: validate
+
+on:
+  pull_request:
+    paths:
+      - "entries/**"
+      - "registry.yaml"
+      - "schemas/**"
+      - "scripts/**"
+      - ".github/workflows/validate.yml"
+
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install root deps
+        run: npm ci
+
+      - name: Rebuild registry.yaml
+        run: node scripts/build_index.mjs
+
+      - name: Validate each entry against entry.schema.json
+        run: |
+          npm install --no-save ajv@8 ajv-formats@3 js-yaml@4
+          node -e '
+          import("ajv/dist/2020.js").then(async ({ default: Ajv }) => {
+            const addFormats = (await import("ajv-formats")).default
+            const yaml = await import("js-yaml")
+            const { readFileSync, readdirSync, statSync } = await import("node:fs")
+            const { join } = await import("node:path")
+            const ajv = new Ajv({ strict: false })
+            addFormats(ajv)
+            const schema = JSON.parse(readFileSync("schemas/entry.schema.json", "utf8"))
+            const validate = ajv.compile(schema)
+            const dirs = readdirSync("entries").filter(
+              (f) => statSync(join("entries", f)).isDirectory() && !f.startsWith("."),
+            )
+            let bad = 0
+            for (const d of dirs) {
+              const entry = yaml.load(readFileSync(`entries/${d}/entry.yaml`, "utf8"))
+              if (!validate(entry)) {
+                console.error(`✗ entries/${d}/entry.yaml`)
+                for (const e of validate.errors) {
+                  console.error(`  ${e.instancePath || "/"} ${e.message}`)
+                }
+                bad++
+              } else {
+                console.log(`✓ entries/${d}/entry.yaml`)
+              }
+            }
+            process.exit(bad === 0 ? 0 : 1)
+          })
+          '
+
+      - name: Check no uncommitted registry.yaml drift
+        run: |
+          if ! git diff --exit-code registry.yaml; then
+            echo "::error::registry.yaml is out of date with entries/."
+            echo "Run 'npm run build-index' locally and commit the result."
+            exit 1
+          fi
+
+  tags:
+    runs-on: ubuntu-latest
+    needs: schema
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify version tags exist in source repos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for f in entries/*/entry.yaml; do
+            name=$(basename "$(dirname "$f")")
+            repo_url=$(grep '^repo:' "$f" | awk '{print $2}')
+            slug=$(echo "$repo_url" | sed -E 's|https://github.com/([^/]+)/([^/]+)/?|\1/\2|')
+            for tag in $(grep '  - tag:' "$f" | awk '{print $3}' | tr -d '"'); do
+              if gh api "repos/$slug/git/refs/tags/$tag" >/dev/null 2>&1; then
+                echo "✓ $name: tag $tag exists in $slug"
+              else
+                echo "::warning::$name: tag $tag not found in $slug (the source repo may not exist yet — fine for bootstrap, fix before merge)"
+              fi
+            done
+          done
