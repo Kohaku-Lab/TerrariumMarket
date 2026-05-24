@@ -1,0 +1,21 @@
+name: kt-biome
+repo: https://github.com/Kohaku-Lab/kt-biome
+description: Official creature + terrarium pack — SWE, research, music, video, diagrammer, Ralph-loop
+tags: [creatures, terrariums, examples, official]
+author: Kohaku-Blueleaf
+license: MIT
+homepage: https://github.com/Kohaku-Lab/kt-biome
+framework: ">=1.5.0,<2.0.0"
+versions:
+  - tag: v0.3.0
+    released: "2026-05-01"
+    notes: "9 creatures, 5 terrariums. Adds ralph_loop terrarium for Huntley-style iterative work."
+    framework: ">=1.5.0,<2.0.0"
+  - tag: v0.2.0
+    released: "2026-04-12"
+    notes: "Adds music, video, diagrammer creatures and deep_research terrarium."
+    framework: ">=1.4.0,<1.6.0"
+  - tag: v0.1.0
+    released: "2026-03-20"
+    notes: "Initial release with general + swe + researcher creatures."
+    framework: ">=1.4.0,<1.5.0"
