@@ -1,0 +1,36 @@
+{
+  "name": "terrariummarket-site",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@octokit/graphql": "^8.1.1",
+    "@octokit/request": "^9.1.3",
+    "dompurify": "^3.2.0",
+    "element-plus": "^2.9.0",
+    "fuse.js": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "marked": "^14.1.0",
+    "pinia": "^2.2.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@unocss/preset-attributify": "^0.65.0",
+    "@unocss/preset-icons": "^0.65.0",
+    "@unocss/preset-wind": "^0.65.0",
+    "@unocss/transformer-directives": "^0.65.0",
+    "@iconify-json/carbon": "^1.2.0",
+    "@vitejs/plugin-vue": "^5.1.0",
+    "prettier": "^3.3.0",
+    "unocss": "^0.65.0",
+    "vite": "^6.0.0"
+  }
+}

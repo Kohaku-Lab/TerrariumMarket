@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="TerrariumMarket — the package marketplace for KohakuTerrarium. Discover creatures, terrariums, plugins, and tools the community has built."
+    />
+    <title>TerrariumMarket</title>
+    <!-- Pre-paint dark-mode class to avoid the white flash on dark systems. -->
+    <script>
+      ;(function () {
+        try {
+          const stored = localStorage.getItem("terrariummarket:theme")
+          const prefers =
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+          const dark = stored ? stored === "dark" : prefers
+          if (dark) document.documentElement.classList.add("dark")
+        } catch (_) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
