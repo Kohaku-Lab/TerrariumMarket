@@ -1,61 +1,47 @@
 <template>
-  <header class="sticky top-0 z-30 border-b border-warm-200/60 dark:border-warm-700/60 bg-warm-50/85 dark:bg-warm-950/85 backdrop-blur-md">
-    <div class="container-page !py-3 flex items-center gap-4">
-      <router-link :to="{ name: 'browse' }" class="flex items-center gap-2 shrink-0 group" :title="SITE_NAME">
-        <img src="/kohaku-icon.png" alt="" class="w-9 h-9 rounded-lg shadow-sm bg-warm-100 dark:bg-warm-900" />
-        <span class="hidden sm:block font-semibold text-warm-800 dark:text-warm-200">
-          {{ SITE_NAME }}
-        </span>
+  <header class="sticky top-0 z-30 flex items-center gap-2 px-3 h-11 border-b border-warm-200 dark:border-warm-700 bg-white dark:bg-warm-900 shrink-0">
+    <!-- Brand mark — gradient + bubble-tea Kohaku overlay -->
+    <router-link :to="{ name: 'browse' }" class="flex items-center gap-2 shrink-0" :title="SITE_NAME">
+      <BrandMark class="w-7 h-7 rounded-md shrink-0" />
+      <span class="hidden sm:block text-sm font-semibold text-warm-700 dark:text-warm-200">
+        {{ SITE_NAME }}
+      </span>
+    </router-link>
+
+    <!-- Primary nav -->
+    <nav class="flex items-center gap-0.5 ml-2">
+      <router-link v-for="item in nav" :key="item.name" :to="{ name: item.route }" class="px-2.5 py-1 rounded text-[12px] font-medium transition-colors" :class="isActive(item.route) ? 'bg-iolite/10 text-iolite dark:text-iolite-light' : 'text-warm-600 dark:text-warm-300 hover:bg-warm-100 dark:hover:bg-warm-800'">
+        {{ item.label }}
       </router-link>
+    </nav>
 
-      <nav class="hidden md:flex items-center gap-1 ml-2">
-        <router-link v-for="item in nav" :key="item.name" :to="{ name: item.route }" class="px-3 py-1.5 rounded-lg text-[13px] font-medium transition-colors" :class="isActive(item.route) ? 'bg-iolite/10 text-iolite dark:text-iolite-light' : 'text-warm-600 dark:text-warm-400 hover:bg-warm-100 dark:hover:bg-warm-800 hover:text-warm-800 dark:hover:text-warm-200'">
-          {{ item.label }}
-        </router-link>
-      </nav>
+    <div class="flex-1" />
 
-      <div class="flex-1" />
+    <!-- Theme toggle.  Static class names per branch so UnoCSS's
+         class scanner picks both icons up at build time (it scans
+         .vue + .js source for literal class strings; dynamic
+         :class bindings driven from a Pinia store don't get
+         visited reliably). -->
+    <button type="button" class="w-7 h-7 flex items-center justify-center rounded text-warm-500 dark:text-warm-400 hover:text-iolite dark:hover:text-iolite-light hover:bg-warm-100 dark:hover:bg-warm-800 transition-colors" :title="`Switch to ${theme.label.toLowerCase()} theme`" @click="theme.toggle">
+      <span v-if="theme.isDark" class="i-carbon-sun text-[14px]" aria-hidden="true" />
+      <span v-else class="i-carbon-moon text-[14px]" aria-hidden="true" />
+    </button>
 
-      <button type="button" class="btn-icon shrink-0" :title="t('header.toggleTheme', { mode: theme.label })" @click="theme.toggle">
-        <span :class="theme.iconClass" class="text-[16px]" />
-      </button>
+    <!-- Auth chip — signed in: avatar + username -->
+    <router-link v-if="auth.signedIn" :to="{ name: 'account' }" class="flex items-center gap-1.5 px-1.5 py-1 rounded hover:bg-warm-100 dark:hover:bg-warm-800 transition-colors" :title="auth.user?.login">
+      <img v-if="auth.user?.avatar_url" :src="auth.user.avatar_url" alt="" class="w-5 h-5 rounded-full" />
+      <span class="hidden md:block text-[12px] font-medium text-warm-700 dark:text-warm-300">
+        {{ auth.user?.login || "Account" }}
+      </span>
+    </router-link>
 
-      <router-link v-if="!auth.signedIn" :to="{ name: 'submit' }" class="hidden sm:inline-block btn-secondary shrink-0 !py-1.5">
-        <span class="i-carbon-add text-[12px] mr-1" />
-        Submit
-      </router-link>
-
-      <button v-if="!auth.signedIn" type="button" class="btn-primary shrink-0 !py-1.5" @click="loginOpen = true">
-        <span class="i-carbon-logo-github text-[14px] mr-1.5" />
-        Sign in
-      </button>
-
-      <router-link v-else :to="{ name: 'account' }" class="flex items-center gap-2 px-2 py-1 rounded-lg hover:bg-warm-100 dark:hover:bg-warm-800 transition-colors" :title="auth.user?.login">
-        <img v-if="auth.user?.avatar_url" :src="auth.user.avatar_url" alt="" class="w-7 h-7 rounded-full" />
-        <span class="hidden md:block text-[13px] font-medium text-warm-700 dark:text-warm-300">
-          {{ auth.user?.login || "Account" }}
-        </span>
-      </router-link>
-
-      <!-- Mobile menu toggle — for small viewports the nav links
-           collapse into a popover.  Implementation kept minimal:
-           a single more-actions button that scrolls the user to
-           the bottom-bar nav we render below. -->
-      <button type="button" class="md:hidden btn-icon" :title="'Menu'" @click="mobileOpen = !mobileOpen">
-        <span class="i-carbon-menu text-[16px]" />
-      </button>
-    </div>
-
-    <!-- Mobile nav drawer (slides under the header on small viewports). -->
-    <transition name="fade">
-      <nav v-if="mobileOpen" class="md:hidden border-t border-warm-200/60 dark:border-warm-700/60 bg-warm-50/95 dark:bg-warm-950/95">
-        <div class="container-page !py-2 flex flex-col gap-1">
-          <router-link v-for="item in nav" :key="item.name" :to="{ name: item.route }" class="px-3 py-2 rounded-lg text-sm font-medium transition-colors" :class="isActive(item.route) ? 'bg-iolite/10 text-iolite dark:text-iolite-light' : 'text-warm-700 dark:text-warm-300 hover:bg-warm-100 dark:hover:bg-warm-800'" @click="mobileOpen = false">
-            {{ item.label }}
-          </router-link>
-        </div>
-      </nav>
-    </transition>
+    <!-- Auth chip — signed out: single Sign-in button.  The Submit
+         action lives on its own page (linked from the nav); no
+         second always-visible button here to compete with it. -->
+    <button v-else type="button" class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-iolite text-white hover:bg-iolite-shadow transition-colors text-[12px] font-medium shrink-0" @click="loginOpen = true">
+      <span class="i-carbon-logo-github text-[12px]" />
+      <span class="hidden sm:inline">Sign in</span>
+    </button>
 
     <LoginModal :open="loginOpen" @close="loginOpen = false" />
   </header>
@@ -65,6 +51,7 @@
 import { computed, ref } from "vue"
 import { useRoute } from "vue-router"
 
+import BrandMark from "@/components/BrandMark.vue"
 import LoginModal from "@/components/LoginModal.vue"
 import { useThemeStore } from "@/stores/theme"
 import { useAuthStore } from "@/stores/auth"
@@ -74,19 +61,7 @@ const theme = useThemeStore()
 const auth = useAuthStore()
 const route = useRoute()
 
-const mobileOpen = ref(false)
 const loginOpen = ref(false)
-
-// Lightweight in-file translator — keeps the component
-// self-contained for now.  Swap with vue-i18n if more locales
-// land later.
-function t(key, params = {}) {
-  const dict = {
-    "header.toggleTheme": ({ mode }) => `Switch to ${mode.toLowerCase()} theme`,
-  }
-  const fn = dict[key]
-  return fn ? fn(params) : key
-}
 
 const nav = computed(() => [
   { name: "browse", route: "browse", label: "Browse" },

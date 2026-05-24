@@ -23,6 +23,49 @@ export default defineConfig({
     }),
   ],
   transformers: [transformerDirectives()],
+  // Force-include every icon class referenced through a runtime
+  // expression (computed Pinia getters, ternary :class bindings).
+  // UnoCSS's content scanner picks up literal class names from
+  // .vue + .js sources, but dynamic bindings driven off a store
+  // value can slip through and get purged — guard them here.
+  safelist: [
+    // theme toggle
+    "i-carbon-sun",
+    "i-carbon-moon",
+    // PackageCard / PackageDetail gradients chosen by tag — gradient
+    // utility classes that come from a computed property
+    "from-iolite",
+    "to-iolite",
+    "from-taaffeite",
+    "to-taaffeite",
+    "from-aquamarine",
+    "to-aquamarine",
+    "from-sage",
+    "to-sage",
+    "from-sapphire",
+    "to-sapphire",
+    "from-amber",
+    "to-amber",
+    "from-warm-500",
+    "to-warm-700",
+    // PackageCard icons chosen by tag
+    "i-carbon-network-3",
+    "i-carbon-plug",
+    "i-carbon-tools",
+    "i-carbon-bot",
+    "i-carbon-cube",
+    // copy-state swap in LoginModal / Submit
+    "i-carbon-checkmark",
+    "i-carbon-copy",
+    // tag-chip color variants chosen from TAG_COLOR map
+    "chip-iolite",
+    "chip-taaffeite",
+    "chip-aqua",
+    "chip-sage",
+    "chip-amber",
+    "chip-coral",
+    "chip-warm",
+  ],
   theme: {
     colors: {
       // Gem accent colors — same as the framework
