@@ -1,0 +1,13 @@
+name: kt-template
+repo: https://github.com/Kohaku-Lab/kt-template
+description: Starter template for building reusable KohakuTerrarium packages — heavily commented creature, terrarium, and Python-package scaffolds
+tags: [creatures, terrariums, examples, template, official]
+author: Kohaku-Lab
+license: LicenseRef-KohakuTerrarium-1.0
+homepage: https://github.com/Kohaku-Lab/kt-template
+framework: ">=1.5.0,<2.0.0"
+versions:
+  - tag: main
+    released: "2026-05-24"
+    notes: "Tracking the main branch — no tagged releases yet."
+    framework: ">=1.5.0,<2.0.0"

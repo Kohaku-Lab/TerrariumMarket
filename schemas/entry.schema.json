@@ -65,8 +65,8 @@
         "properties": {
           "tag": {
             "type": "string",
-            "pattern": "^v?[0-9]+\\.[0-9]+(\\.[0-9]+)?([.-][A-Za-z0-9.]+)?$",
-            "description": "Git tag in the source repo. Semver-ish; leading 'v' optional."
+            "pattern": "^(v?[0-9]+\\.[0-9]+(\\.[0-9]+)?([.-][A-Za-z0-9.]+)?|main|master|HEAD|[A-Za-z0-9._/-]{1,60})$",
+            "description": "Git tag, branch, or commit-ish in the source repo. Semver-ish preferred (v1.2.0), but ``main`` / ``master`` / any branch name is allowed so the registry can list pre-release packages that haven't tagged a version yet."
           },
           "commit": {
             "type": "string",

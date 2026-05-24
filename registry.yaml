@@ -1,63 +1,44 @@
 schema_version: 1
-generated: '2026-05-24T07:49:28.158Z'
+generated: '2026-05-24T08:19:09.027Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
 packages:
-  - name: kohaku-creatures
-    repo: https://github.com/Kohaku-Lab/kohaku-creatures
-    description: Companion creature collection with specialised personalities for chat, story, and roleplay
-    tags:
-      - creatures
-      - examples
-    author: Kohaku-Blueleaf
-    license: MIT
-    framework: '>=1.5.0,<2.0.0'
-    versions:
-      - tag: v0.2.0
-        released: '2026-04-28'
-        notes: Adds romance + sci-fi character templates.
-        framework: '>=1.5.0,<2.0.0'
-      - tag: v0.1.0
-        released: '2026-03-25'
-        notes: Initial release.
-        framework: '>=1.4.0,<1.6.0'
-  - name: kohaku-extensions
-    repo: https://github.com/Kohaku-Lab/kohaku-extensions
-    description: Tool + plugin extensions — additional capabilities for creatures (search providers, file converters, integrations)
-    tags:
-      - tools
-      - plugins
-    author: Kohaku-Blueleaf
-    license: MIT
-    framework: '>=1.5.0,<2.0.0'
-    versions:
-      - tag: v0.1.0
-        released: '2026-04-15'
-        notes: Initial release with extra search providers + file converters.
-        framework: '>=1.5.0,<2.0.0'
   - name: kt-biome
     repo: https://github.com/Kohaku-Lab/kt-biome
-    description: Official creature + terrarium pack — SWE, research, music, video, diagrammer, Ralph-loop
+    description: Official batteries-included pack — ready-to-run creatures, terrariums, plugins, tools, skill bundles, and examples
+    tags:
+      - creatures
+      - terrariums
+      - plugins
+      - tools
+      - skills
+      - examples
+      - official
+    author: Kohaku-Lab
+    license: LicenseRef-KohakuTerrarium-1.0
+    homepage: https://github.com/Kohaku-Lab/kt-biome
+    framework: '>=1.5.0,<2.0.0'
+    versions:
+      - tag: main
+        released: '2026-05-08'
+        notes: Tracking the main branch — no tagged releases yet.  Pin to a specific commit if you need reproducibility.
+        framework: '>=1.5.0,<2.0.0'
+  - name: kt-template
+    repo: https://github.com/Kohaku-Lab/kt-template
+    description: Starter template for building reusable KohakuTerrarium packages — heavily commented creature, terrarium, and Python-package scaffolds
     tags:
       - creatures
       - terrariums
       - examples
+      - template
       - official
-    author: Kohaku-Blueleaf
-    license: MIT
-    homepage: https://github.com/Kohaku-Lab/kt-biome
+    author: Kohaku-Lab
+    license: LicenseRef-KohakuTerrarium-1.0
+    homepage: https://github.com/Kohaku-Lab/kt-template
     framework: '>=1.5.0,<2.0.0'
     versions:
-      - tag: v0.3.0
-        released: '2026-05-01'
-        notes: 9 creatures, 5 terrariums. Adds ralph_loop terrarium for Huntley-style iterative work.
+      - tag: main
+        released: '2026-05-24'
+        notes: Tracking the main branch — no tagged releases yet.
         framework: '>=1.5.0,<2.0.0'
-      - tag: v0.2.0
-        released: '2026-04-12'
-        notes: Adds music, video, diagrammer creatures and deep_research terrarium.
-        framework: '>=1.4.0,<1.6.0'
-      - tag: v0.1.0
-        released: '2026-03-20'
-        notes: Initial release with general + swe + researcher creatures.
-        framework: '>=1.4.0,<1.5.0'
