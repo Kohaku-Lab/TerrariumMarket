@@ -7,23 +7,24 @@ Live site: _(coming soon — deployed via Cloudflare Pages)_
 
 ## What's in this repo
 
-| Path | Purpose |
-|---|---|
-| `registry.yaml` | The canonical index — generated from `entries/*/entry.yaml` on every merge. Every KohakuTerrarium install reads this file (or one of its mirrors) to resolve `kt install @<name>` |
-| `entries/<name>/entry.yaml` | One file per package. Human-authored; CI rebuilds `registry.yaml` from these |
-| `entries/<name>/README.md` | Long-form description rendered on the package detail page |
-| `schemas/*.json` | JSON Schema for `entry.yaml` and `registry.yaml`; PRs are validated against these |
-| `scripts/build_index.mjs` | Node script that concatenates `entries/*/entry.yaml` → `registry.yaml` |
-| `site/` | The Cloudflare-Pages-hosted browser frontend (Vue 3 + Vite) |
-| `.github/workflows/` | PR validation + on-merge index rebuild (no deploy workflow — Cloudflare Pages auto-deploys from the GitHub integration) |
+| Path                        | Purpose                                                                                                                                                                           |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `registry.yaml`             | The canonical index — generated from `entries/*/entry.yaml` on every merge. Every KohakuTerrarium install reads this file (or one of its mirrors) to resolve `kt install @<name>` |
+| `entries/<name>/entry.yaml` | One file per package. Human-authored; CI rebuilds `registry.yaml` from these                                                                                                      |
+| `entries/<name>/README.md`  | Long-form description rendered on the package detail page                                                                                                                         |
+| `schemas/*.json`            | JSON Schema for `entry.yaml` and `registry.yaml`; PRs are validated against these                                                                                                 |
+| `scripts/build_index.mjs`   | Node script that concatenates `entries/*/entry.yaml` → `registry.yaml`                                                                                                            |
+| `site/`                     | The Cloudflare-Pages-hosted browser frontend (Vue 3 + Vite)                                                                                                                       |
+| `.github/workflows/`        | PR validation + on-merge index rebuild (no deploy workflow — Cloudflare Pages auto-deploys from the GitHub integration)                                                           |
 
 ## How submission works
 
 Open a PR adding (or editing) `entries/<your-package>/entry.yaml`
-+ `entries/<your-package>/README.md`. CI runs schema + sandbox-
-install validation. A maintainer reviews and merges. The on-merge
-workflow rebuilds `registry.yaml`; mirrors and clients pick up
-the change on their next fetch (≤ 1 hour cache).
+
+- `entries/<your-package>/README.md`. CI runs schema + sandbox-
+  install validation. A maintainer reviews and merges. The on-merge
+  workflow rebuilds `registry.yaml`; mirrors and clients pick up
+  the change on their next fetch (≤ 1 hour cache).
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full walkthrough.
 

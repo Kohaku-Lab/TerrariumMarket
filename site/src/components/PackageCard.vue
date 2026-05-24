@@ -1,13 +1,7 @@
 <template>
-  <router-link
-    :to="{ name: 'package', params: { name: pkg.name } }"
-    class="card-hover p-4 flex flex-col gap-3 no-underline"
-  >
+  <router-link :to="{ name: 'package', params: { name: pkg.name } }" class="card-hover p-4 flex flex-col gap-3 no-underline">
     <div class="flex items-start gap-3">
-      <div
-        class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br"
-        :class="gradientClass"
-      >
+      <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 bg-gradient-to-br" :class="gradientClass">
         <span :class="iconClass" class="text-white text-[18px]" />
       </div>
 
@@ -24,9 +18,7 @@
             official
           </span>
         </div>
-        <div
-          class="text-[11px] text-warm-500 dark:text-warm-400 mt-0.5 flex items-center gap-2 flex-wrap"
-        >
+        <div class="text-[11px] text-warm-500 dark:text-warm-400 mt-0.5 flex items-center gap-2 flex-wrap">
           <span>{{ pkg.author }}</span>
           <span>·</span>
           <span>{{ pkg.license }}</span>
@@ -36,19 +28,12 @@
       </div>
     </div>
 
-    <p
-      class="text-[13px] text-warm-600 dark:text-warm-400 leading-snug line-clamp-2 min-h-[2.5rem]"
-    >
+    <p class="text-[13px] text-warm-600 dark:text-warm-400 leading-snug line-clamp-2 min-h-[2.5rem]">
       {{ pkg.description }}
     </p>
 
     <div class="flex flex-wrap gap-1.5">
-      <TagBadge
-        v-for="tag in displayTags"
-        :key="tag"
-        :tag="tag"
-        @click.stop.prevent="$emit('tag-click', tag)"
-      />
+      <TagBadge v-for="tag in displayTags" :key="tag" :tag="tag" @click.stop.prevent="$emit('tag-click', tag)" />
     </div>
   </router-link>
 </template>

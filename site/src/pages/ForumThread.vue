@@ -1,9 +1,6 @@
 <template>
   <div class="container-page max-w-4xl">
-    <router-link
-      :to="{ name: 'forum' }"
-      class="text-[12px] text-warm-500 dark:text-warm-400 hover:text-iolite dark:hover:text-iolite-light inline-flex items-center gap-1 mb-4"
-    >
+    <router-link :to="{ name: 'forum' }" class="text-[12px] text-warm-500 dark:text-warm-400 hover:text-iolite dark:hover:text-iolite-light inline-flex items-center gap-1 mb-4">
       <span class="i-carbon-arrow-left text-[12px]" />
       Back to Forum
     </router-link>
@@ -17,12 +14,7 @@
       </div>
     </section>
 
-    <section
-      v-else-if="forum.loadingThread || !thread"
-      class="card p-6 text-sm text-warm-500 dark:text-warm-400"
-    >
-      Loading…
-    </section>
+    <section v-else-if="forum.loadingThread || !thread" class="card p-6 text-sm text-warm-500 dark:text-warm-400">Loading…</section>
 
     <template v-else>
       <!-- Header -->
@@ -41,20 +33,10 @@
       <!-- Original post -->
       <article class="card p-5 mb-4">
         <div class="flex items-start gap-3">
-          <img
-            v-if="thread.author?.avatarUrl"
-            :src="thread.author.avatarUrl"
-            alt=""
-            class="w-10 h-10 rounded-full shrink-0"
-          />
+          <img v-if="thread.author?.avatarUrl" :src="thread.author.avatarUrl" alt="" class="w-10 h-10 rounded-full shrink-0" />
           <div class="flex-1 min-w-0">
             <div class="flex items-center gap-2 mb-2 text-[13px]">
-              <a
-                :href="thread.author?.url"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light"
-              >
+              <a :href="thread.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light">
                 {{ thread.author?.login }}
               </a>
               <span class="text-warm-500 dark:text-warm-400">
@@ -68,27 +50,12 @@
 
       <!-- Comments -->
       <section class="flex flex-col gap-3 mb-6">
-        <article
-          v-for="c in thread.comments?.nodes || []"
-          :key="c.id"
-          class="card p-5"
-          :class="{ '!border-aquamarine/40': c.isAnswer }"
-        >
+        <article v-for="c in thread.comments?.nodes || []" :key="c.id" class="card p-5" :class="{ '!border-aquamarine/40': c.isAnswer }">
           <div class="flex items-start gap-3">
-            <img
-              v-if="c.author?.avatarUrl"
-              :src="c.author.avatarUrl"
-              alt=""
-              class="w-9 h-9 rounded-full shrink-0"
-            />
+            <img v-if="c.author?.avatarUrl" :src="c.author.avatarUrl" alt="" class="w-9 h-9 rounded-full shrink-0" />
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2 mb-2 text-[13px]">
-                <a
-                  :href="c.author?.url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light"
-                >
+                <a :href="c.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light">
                   {{ c.author?.login }}
                 </a>
                 <span class="text-warm-500 dark:text-warm-400">
@@ -102,25 +69,12 @@
               <MarkdownRenderer :source="c.body" />
 
               <!-- Nested replies -->
-              <div
-                v-if="c.replies?.nodes?.length"
-                class="mt-4 pt-4 border-t border-warm-200 dark:border-warm-700 flex flex-col gap-4"
-              >
+              <div v-if="c.replies?.nodes?.length" class="mt-4 pt-4 border-t border-warm-200 dark:border-warm-700 flex flex-col gap-4">
                 <div v-for="r in c.replies.nodes" :key="r.id" class="flex items-start gap-2">
-                  <img
-                    v-if="r.author?.avatarUrl"
-                    :src="r.author.avatarUrl"
-                    alt=""
-                    class="w-7 h-7 rounded-full shrink-0"
-                  />
+                  <img v-if="r.author?.avatarUrl" :src="r.author.avatarUrl" alt="" class="w-7 h-7 rounded-full shrink-0" />
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-2 mb-1 text-[12px]">
-                      <a
-                        :href="r.author?.url"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="font-medium text-warm-700 dark:text-warm-300 hover:text-iolite dark:hover:text-iolite-light"
-                      >
+                      <a :href="r.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-700 dark:text-warm-300 hover:text-iolite dark:hover:text-iolite-light">
                         {{ r.author?.login }}
                       </a>
                       <span class="text-warm-500 dark:text-warm-400">
@@ -132,35 +86,16 @@
                 </div>
               </div>
 
-              <button
-                v-if="auth.signedIn"
-                class="btn-ghost !text-[11px] mt-3"
-                @click="replyParentId = replyParentId === c.id ? null : c.id"
-              >
+              <button v-if="auth.signedIn" class="btn-ghost !text-[11px] mt-3" @click="replyParentId = replyParentId === c.id ? null : c.id">
                 <span class="i-carbon-reply text-[11px] mr-1" />
                 {{ replyParentId === c.id ? "Cancel reply" : "Reply" }}
               </button>
 
-              <div
-                v-if="replyParentId === c.id"
-                class="mt-3 p-3 border border-warm-200 dark:border-warm-700 rounded-lg"
-              >
-                <textarea
-                  v-model="replyBody"
-                  class="input-field min-h-[100px] font-mono text-[13px]"
-                  :placeholder="`Reply to ${c.author?.login}…`"
-                />
+              <div v-if="replyParentId === c.id" class="mt-3 p-3 border border-warm-200 dark:border-warm-700 rounded-lg">
+                <textarea v-model="replyBody" class="input-field min-h-[100px] font-mono text-[13px]" :placeholder="`Reply to ${c.author?.login}…`" />
                 <div class="flex items-center justify-end gap-2 mt-2">
                   <el-button size="small" @click="replyParentId = null">Cancel</el-button>
-                  <el-button
-                    size="small"
-                    type="primary"
-                    :loading="forum.posting"
-                    :disabled="replyBody.trim().length < 1"
-                    @click="onPostReply(c.id)"
-                  >
-                    Post reply
-                  </el-button>
+                  <el-button size="small" type="primary" :loading="forum.posting" :disabled="replyBody.trim().length < 1" @click="onPostReply(c.id)"> Post reply </el-button>
                 </div>
               </div>
             </div>
@@ -180,24 +115,12 @@
           </button>
         </div>
         <div v-else>
-          <textarea
-            v-model="newBody"
-            class="input-field min-h-[120px] font-mono text-[13px]"
-            placeholder="Markdown welcome."
-          />
+          <textarea v-model="newBody" class="input-field min-h-[120px] font-mono text-[13px]" placeholder="Markdown welcome." />
           <div v-if="forum.postError" class="text-coral text-[12px] mt-2">
             {{ forum.postError?.message || String(forum.postError) }}
           </div>
           <div class="flex items-center justify-end mt-3">
-            <el-button
-              size="small"
-              type="primary"
-              :loading="forum.posting"
-              :disabled="newBody.trim().length < 1"
-              @click="onPostComment"
-            >
-              Post comment
-            </el-button>
+            <el-button size="small" type="primary" :loading="forum.posting" :disabled="newBody.trim().length < 1" @click="onPostComment"> Post comment </el-button>
           </div>
         </div>
       </section>

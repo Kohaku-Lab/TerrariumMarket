@@ -5,53 +5,19 @@
       <h1 class="text-2xl sm:text-3xl font-semibold text-warm-800 dark:text-warm-200 mb-2">
         {{ SITE_NAME }}
       </h1>
-      <p class="text-sm sm:text-base text-warm-500 dark:text-warm-400 max-w-2xl">
-        {{ SITE_TAGLINE }}. Browse creatures, terrariums, plugins, and tools the community has
-        built, or
-        <router-link
-          :to="{ name: 'submit' }"
-          class="text-iolite dark:text-iolite-light hover:underline font-medium"
-        >
-          share your own</router-link
-        >.
-      </p>
+      <p class="text-sm sm:text-base text-warm-500 dark:text-warm-400 max-w-2xl">{{ SITE_TAGLINE }}. Browse creatures, terrariums, plugins, and tools the community has built, or <router-link :to="{ name: 'submit' }" class="text-iolite dark:text-iolite-light hover:underline font-medium"> share your own</router-link>.</p>
     </section>
 
     <!-- Search + filters -->
-    <section
-      class="card p-3 mb-6 flex flex-col md:flex-row md:items-center gap-3 sticky top-[60px] z-20"
-    >
+    <section class="card p-3 mb-6 flex flex-col md:flex-row md:items-center gap-3 sticky top-[60px] z-20">
       <div class="relative flex-1">
         <span class="input-icon i-carbon-search text-[15px]" />
-        <input
-          v-model="query"
-          type="search"
-          class="input-field !pl-9"
-          :placeholder="`Search ${registry.packages.length || ''} packages…`"
-        />
+        <input v-model="query" type="search" class="input-field !pl-9" :placeholder="`Search ${registry.packages.length || ''} packages…`" />
       </div>
 
       <div class="flex items-center gap-2 flex-wrap">
-        <button
-          type="button"
-          class="chip"
-          :class="!activeTag ? 'chip-iolite' : 'chip-warm hover:bg-warm-200 dark:hover:bg-warm-700'"
-          @click="activeTag = null"
-        >
-          all
-        </button>
-        <button
-          v-for="tag in availableTags"
-          :key="tag"
-          type="button"
-          class="chip"
-          :class="
-            activeTag === tag
-              ? `chip-${TAG_COLOR[tag] || 'iolite'}`
-              : 'chip-warm hover:bg-warm-200 dark:hover:bg-warm-700'
-          "
-          @click="activeTag = activeTag === tag ? null : tag"
-        >
+        <button type="button" class="chip" :class="!activeTag ? 'chip-iolite' : 'chip-warm hover:bg-warm-200 dark:hover:bg-warm-700'" @click="activeTag = null">all</button>
+        <button v-for="tag in availableTags" :key="tag" type="button" class="chip" :class="activeTag === tag ? `chip-${TAG_COLOR[tag] || 'iolite'}` : 'chip-warm hover:bg-warm-200 dark:hover:bg-warm-700'" @click="activeTag = activeTag === tag ? null : tag">
           {{ tag }}
         </button>
       </div>
@@ -62,13 +28,7 @@
           <option value="newest">Newest</option>
           <option value="name">Name (A→Z)</option>
         </select>
-        <button
-          type="button"
-          class="btn-icon"
-          :title="'Refresh registry'"
-          :disabled="registry.loading"
-          @click="onRefresh"
-        >
+        <button type="button" class="btn-icon" :title="'Refresh registry'" :disabled="registry.loading" @click="onRefresh">
           <span class="i-carbon-renew text-[14px]" :class="{ 'kohaku-pulse': registry.loading }" />
         </button>
       </div>
@@ -83,18 +43,13 @@
           <div class="text-warm-600 dark:text-warm-400 break-words">
             {{ registry.error?.message || String(registry.error) }}
           </div>
-          <button class="btn-secondary !py-1 !px-3 !text-[12px] mt-2" @click="onRefresh">
-            Retry
-          </button>
+          <button class="btn-secondary !py-1 !px-3 !text-[12px] mt-2" @click="onRefresh">Retry</button>
         </div>
       </div>
     </section>
 
     <!-- Loading skeleton -->
-    <section
-      v-if="registry.loading && results.length === 0"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-    >
+    <section v-if="registry.loading && results.length === 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <div v-for="i in 6" :key="i" class="card p-4 flex flex-col gap-3 animate-pulse">
         <div class="flex gap-3">
           <div class="w-10 h-10 rounded-lg bg-warm-200 dark:bg-warm-800" />
@@ -111,21 +66,12 @@
     </section>
 
     <!-- Empty -->
-    <section
-      v-else-if="results.length === 0"
-      class="card p-12 flex flex-col items-center text-center gap-2"
-    >
+    <section v-else-if="results.length === 0" class="card p-12 flex flex-col items-center text-center gap-2">
       <span class="i-carbon-search-locate text-[40px] text-warm-400 dark:text-warm-600" />
       <h3 class="text-base font-semibold text-warm-700 dark:text-warm-300">No matches</h3>
       <p class="text-sm text-warm-500 dark:text-warm-400 max-w-md">
-        Try a different search term or clear the tag filter. If you can't find what you're looking
-        for, consider
-        <router-link
-          :to="{ name: 'submit' }"
-          class="text-iolite dark:text-iolite-light hover:underline font-medium"
-        >
-          publishing it yourself</router-link
-        >.
+        Try a different search term or clear the tag filter. If you can't find what you're looking for, consider
+        <router-link :to="{ name: 'submit' }" class="text-iolite dark:text-iolite-light hover:underline font-medium"> publishing it yourself</router-link>.
       </p>
       <button
         v-if="query || activeTag"
@@ -143,19 +89,11 @@
 
     <!-- Card grid -->
     <section v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <PackageCard
-        v-for="pkg in results"
-        :key="pkg.name"
-        :pkg="pkg"
-        @tag-click="(tag) => (activeTag = tag)"
-      />
+      <PackageCard v-for="pkg in results" :key="pkg.name" :pkg="pkg" @tag-click="(tag) => (activeTag = tag)" />
     </section>
 
     <!-- Result count + last refresh -->
-    <div
-      v-if="results.length > 0"
-      class="mt-6 flex items-center justify-between text-[12px] text-warm-500 dark:text-warm-400"
-    >
+    <div v-if="results.length > 0" class="mt-6 flex items-center justify-between text-[12px] text-warm-500 dark:text-warm-400">
       <div>
         Showing
         <strong class="text-warm-700 dark:text-warm-300">{{ results.length }}</strong>

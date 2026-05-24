@@ -62,8 +62,7 @@ function main() {
   const index = {
     schema_version: 1,
     generated: new Date().toISOString(),
-    source:
-      "https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml",
+    source: "https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml",
     maintainers: [{ github: "Kohaku-Blueleaf" }],
     packages,
   }

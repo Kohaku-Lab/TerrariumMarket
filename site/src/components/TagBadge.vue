@@ -1,9 +1,5 @@
 <template>
-  <button
-    type="button"
-    :class="['gem-badge', chipClass, 'cursor-pointer transition-all hover:scale-[1.02]']"
-    @click="$emit('click', tag)"
-  >
+  <button type="button" :class="['gem-badge', chipClass, 'cursor-pointer transition-all hover:scale-[1.02]']" @click="$emit('click', tag)">
     {{ tag }}
   </button>
 </template>

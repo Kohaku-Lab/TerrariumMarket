@@ -1,37 +1,27 @@
 # kt-biome
 
-The official creature + terrarium reference pack for
-KohakuTerrarium.  Nine creatures and five terrariums covering the
-common single-agent and multi-agent workflow shapes the framework
-was built for.
+The official batteries-included package for **KohakuTerrarium** —
+ready-to-run creatures, reusable terrariums, production-oriented
+plugins and tools, packaged skill bundles, and concrete examples.
 
-## Creatures
+If you've just installed KohakuTerrarium and you want to see what
+the framework can do without writing config from scratch,
+`kt install @kt-biome` is the right starting point.
 
-| Name | Role |
-|---|---|
-| `general` | Base creature — 24 tools, 6 sub-agents, core personality |
-| `bounded_general` | `general` with a 50-turn shared iteration budget |
-| `swe` | Software engineering specialist |
-| `researcher` | Research and analysis specialist |
-| `music` | Music composition via LilyPond |
-| `video` | HTML-based HyperFrame video / frame composition |
-| `diagrammer` | Diagrams via Mermaid / Graphviz / D2 |
-| `ralph_initializer` | Ralph-loop scaffolding (one-shot) |
-| `ralph_worker` | Ralph-loop iterative worker |
+## What's inside
 
-All non-`general` creatures inherit from `general` so they share the
-core tool surface + personality and override only the system-prompt
-+ a focused tool subset.
+| Kind       | What                                                                                                                                    |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Creatures  | Single-agent personalities + tool surfaces for common workflows (SWE, research, content composition, structured loops, …)               |
+| Terrariums | Multi-creature graphs wired for common collaboration shapes (driver / navigator pair, reviewer team, deep-research, automated loops, …) |
+| Plugins    | Production-oriented cross-cutting behaviour — sandboxing, budget gates, permission UI, auto-compaction profiles                         |
+| Tools      | Extra tools beyond the framework's built-ins                                                                                            |
+| Skills     | Packaged how-to skill bundles — markdown manifests loaded on demand                                                                     |
+| Examples   | Walkthrough-style folders that explain a single concept end-to-end                                                                      |
 
-## Terrariums
-
-| Name | Topology |
-|---|---|
-| `swe_team` | Implementer + reviewer (two `swe` instances on role-asymmetric channels) |
-| `pair_programming` | Driver + navigator pair (two `swe` instances) |
-| `deep_research` | Planner, researcher, synthesizer, critic |
-| `auto_research` | Ideator, coder, runner, analyzer loop |
-| `ralph_loop` | Huntley-style Ralph loop — one-shot initializer + repeating worker |
+See the repo's own README + each subdirectory's manifest for the
+current contents — `kt-biome` evolves; this listing tracks the
+main branch.
 
 ## Install
 
@@ -39,24 +29,29 @@ core tool surface + personality and override only the system-prompt
 kt install @kt-biome
 ```
 
-Or pin a specific version:
+`kt-biome` is currently shipped as a moving target on the `main`
+branch. Once it cuts its first semver tag, you'll be able to pin
+versions:
 
 ```bash
-kt install @kt-biome@v0.3.0
+kt install @kt-biome@v1.0.0
 ```
 
 ## Use
 
 ```bash
-# Spawn the swe-team terrarium
-kt run @kt-biome/terrariums/swe_team
+# List everything kt-biome registered after install
+kt list
+
+# Spawn a terrarium it provides
+kt run @kt-biome/terrariums/<name>
 
 # Or chat with a single creature
-kt run @kt-biome/creatures/researcher
+kt run @kt-biome/creatures/<name>
 ```
 
 ## Source + license
 
 - Repo: https://github.com/Kohaku-Lab/kt-biome
-- Licence: MIT
-- Maintainer: [@Kohaku-Blueleaf](https://github.com/Kohaku-Blueleaf)
+- Licence: KohakuTerrarium License 1.0
+- Maintainer: [@Kohaku-Lab](https://github.com/Kohaku-Lab)

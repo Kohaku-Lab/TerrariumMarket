@@ -1,0 +1,55 @@
+# Lint + format check across the repo.
+#
+# Three jobs in parallel — site eslint, site prettier, root prettier.
+# Schema validation lives in validate.yml; this workflow is purely
+# about code style + JS syntax.
+
+name: lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  site-eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: site/package-lock.json
+      - name: Install site deps
+        run: cd site && npm ci
+      - name: ESLint
+        run: cd site && npm run lint
+
+  site-prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: site/package-lock.json
+      - name: Install site deps
+        run: cd site && npm ci
+      - name: Prettier check
+        run: cd site && npm run format:check
+
+  root-prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+      - name: Install root deps
+        run: npm ci
+      - name: Prettier check (entries, scripts, docs)
+        run: npm run format:check
