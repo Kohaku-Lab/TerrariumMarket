@@ -44,6 +44,11 @@ export const useRegistryStore = defineStore("registry", () => {
   }
 
   function _loadCached() {
+    // Dev mode always re-fetches the local registry.yaml so on-disk
+    // edits show up on the next reload without manually clicking
+    // the refresh button or clearing localStorage.  Cache is for
+    // production only.
+    if (import.meta.env.DEV) return false
     try {
       const raw = localStorage.getItem(CACHE_KEY)
       if (!raw) return false
@@ -61,6 +66,7 @@ export const useRegistryStore = defineStore("registry", () => {
   }
 
   function _saveCache() {
+    if (import.meta.env.DEV) return
     try {
       localStorage.setItem(
         CACHE_KEY,
