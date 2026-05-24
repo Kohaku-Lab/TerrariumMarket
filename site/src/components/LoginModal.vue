@@ -1,7 +1,43 @@
 <template>
   <el-dialog v-model="visible" title="Sign in with GitHub" width="520px" align-center :close-on-click-modal="false" :show-close="canClose" @close="onClose">
+    <!-- OAuth App not configured — common on a fresh fork / local dev.
+         Explain in-place with a link to the GitHub setup page instead
+         of just emitting an opaque error. -->
+    <div v-if="phase === 'not_configured'" class="flex flex-col gap-4 text-[13px]">
+      <div class="flex items-start gap-3 p-3 rounded-lg bg-amber/10 border border-amber/30">
+        <span class="i-carbon-warning-alt-filled text-amber text-[18px] shrink-0 mt-0.5" />
+        <div class="flex-1">
+          <p class="font-medium text-warm-800 dark:text-warm-200 mb-1">GitHub sign-in isn't wired up yet</p>
+          <p class="text-warm-600 dark:text-warm-400 leading-relaxed">This site needs a GitHub OAuth App's client ID to authenticate users via Device Flow. Reading + browsing works without it, but Submit + Forum-post need it.</p>
+        </div>
+      </div>
+
+      <section class="text-[12px] text-warm-600 dark:text-warm-400 leading-relaxed">
+        <p class="font-medium text-warm-700 dark:text-warm-300 mb-2">For the maintainer setting this up:</p>
+        <ol class="list-decimal pl-5 space-y-1">
+          <li>
+            Open
+            <a :href="`https://github.com/organizations/${REGISTRY_OWNER}/settings/applications/new`" target="_blank" rel="noopener noreferrer" class="text-iolite dark:text-iolite-light hover:underline inline-flex items-center gap-1">
+              GitHub → org → New OAuth App
+              <span class="i-carbon-launch text-[10px]" />
+            </a>
+            (or
+            <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener noreferrer" class="text-iolite dark:text-iolite-light hover:underline inline-flex items-center gap-1">
+              under a personal account
+              <span class="i-carbon-launch text-[10px]" />
+            </a>
+            for testing).
+          </li>
+          <li><strong>Application name</strong>: <code class="font-mono">TerrariumMarket</code>. <strong>Homepage URL</strong>: the deployed site origin (e.g. <code class="font-mono">https://terrariummarket.pages.dev/</code>). <strong>Authorization callback URL</strong>: same as Homepage URL. Device Flow ignores the callback (the user enters the code on github.com directly), but GitHub's form requires the field — any valid URL works.</li>
+          <li>On the created app's page, click <strong>"Enable Device Flow"</strong>. Copy the <strong>Client ID</strong>.</li>
+          <li>Paste it into <code class="font-mono">site/src/config.js</code> as the value of <code class="font-mono">GITHUB_CLIENT_ID</code>, then commit + push. Cloudflare Pages rebuilds in &lt; 1 min.</li>
+        </ol>
+        <p class="mt-3 text-warm-500 dark:text-warm-500 italic">No client secret is needed — Device Flow is designed for public clients.</p>
+      </section>
+    </div>
+
     <!-- starting / no code yet -->
-    <div v-if="phase === 'requesting_code'" class="flex flex-col items-center gap-3 py-6 text-[13px] text-warm-500 dark:text-warm-400">
+    <div v-else-if="phase === 'requesting_code'" class="flex flex-col items-center gap-3 py-6 text-[13px] text-warm-500 dark:text-warm-400">
       <span class="i-carbon-renew text-2xl text-iolite kohaku-pulse" />
       <span>Requesting device code…</span>
     </div>
@@ -66,7 +102,7 @@
         Try again
       </el-button>
       <el-button size="small" @click="onClose">
-        {{ phase === "ready" ? "Close" : "Cancel" }}
+        {{ phase === "ready" ? "Close" : phase === "not_configured" ? "Close" : "Cancel" }}
       </el-button>
     </template>
   </el-dialog>
@@ -76,6 +112,7 @@
 import { computed, ref, watch } from "vue"
 
 import { useAuthStore } from "@/stores/auth"
+import { REGISTRY_OWNER } from "@/config"
 
 const props = defineProps({
   open: { type: Boolean, default: false },
@@ -102,7 +139,7 @@ const canClose = computed(() => phase.value !== "awaiting_user" || Boolean(userC
 watch(
   () => props.open,
   (isOpen) => {
-    if (isOpen && (phase.value === "idle" || phase.value === "error")) {
+    if (isOpen && (phase.value === "idle" || phase.value === "error" || phase.value === "not_configured")) {
       auth.start()
     }
   },

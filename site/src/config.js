@@ -30,16 +30,16 @@ export function registryUrl() {
   return REGISTRY_RAW_URL
 }
 
-// GitHub OAuth App client ID for Device Flow.  Create the OAuth
-// App under ``Kohaku-Lab`` org with Device Flow enabled and replace
-// this value.  Without a valid client ID the sign-in / submit /
-// post flows fail with a clear "OAuth not configured" message;
-// browse / read flows work unauthenticated.
+// GitHub OAuth App client ID for Device Flow.  Created under the
+// ``Kohaku-Lab`` org with Device Flow enabled.  Without a valid
+// client ID the sign-in / submit / post flows fail with a clear
+// "OAuth not configured" message; browse / read flows work
+// unauthenticated.
 //
 // IMPORTANT: client_secret is NEVER stored in the frontend.
 // Device Flow is designed for public clients and only needs the
-// public ID.
-export const GITHUB_CLIENT_ID = ""
+// public ID.  This value is safe to commit.
+export const GITHUB_CLIENT_ID = "Ov23liZ6i2tHHzib3MWw"
 
 // Scopes requested at Device Flow start.  ``public_repo`` is the
 // minimum needed to fork the registry, push a branch, open a PR,

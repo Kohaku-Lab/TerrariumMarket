@@ -58,9 +58,8 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function start() {
     if (!configured()) {
-      phase.value = "error"
-      errorMessage.value =
-        "GitHub OAuth client ID not configured. See src/config.js to set GITHUB_CLIENT_ID."
+      phase.value = "not_configured"
+      errorMessage.value = ""
       return
     }
     if (phase.value === "awaiting_user") return // already running
