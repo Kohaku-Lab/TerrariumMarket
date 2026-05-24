@@ -151,8 +151,21 @@ watch(
   (p) => {
     if (p === "ready") {
       emit("done")
-      // Brief moment so the user sees the success state.
-      setTimeout(() => emit("close"), 1000)
+      // Brief moment so the user sees the "Signed in as …" state,
+      // then hard-reload.  Reloading is the simplest way to make
+      // EVERY component pick up the new auth state — the Pinia
+      // store updates eagerly, but a handful of pages (Submit's
+      // form defaults from auth.user?.login, the Forum modal's
+      // categoryId preset, the App's onMounted hydrate chain)
+      // read auth state at setup() time and won't re-derive on a
+      // mid-session token grant.  Hard-reload re-hydrates from
+      // localStorage so the whole page sees the signed-in user
+      // consistently.  Hash-routed so the URL (incl. /forum or
+      // /submit deep links) is preserved across the reload.
+      setTimeout(() => {
+        if (typeof window !== "undefined") window.location.reload()
+        else emit("close")
+      }, 1000)
     }
   },
 )
