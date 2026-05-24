@@ -1,0 +1,13 @@
+{
+  "name": "terrariummarket",
+  "private": true,
+  "type": "module",
+  "description": "Root-level scripts (build-index, validate) for the TerrariumMarket data repo. The Vue site has its own package.json under site/.",
+  "scripts": {
+    "build-index": "node scripts/build_index.mjs",
+    "validate": "node scripts/build_index.mjs && echo 'OK'"
+  },
+  "devDependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

@@ -1,0 +1,63 @@
+schema_version: 1
+generated: '2026-05-24T07:49:28.158Z'
+source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
+maintainers:
+  - github: Kohaku-Blueleaf
+packages:
+  - name: kohaku-creatures
+    repo: https://github.com/Kohaku-Lab/kohaku-creatures
+    description: Companion creature collection with specialised personalities for chat, story, and roleplay
+    tags:
+      - creatures
+      - examples
+    author: Kohaku-Blueleaf
+    license: MIT
+    framework: '>=1.5.0,<2.0.0'
+    versions:
+      - tag: v0.2.0
+        released: '2026-04-28'
+        notes: Adds romance + sci-fi character templates.
+        framework: '>=1.5.0,<2.0.0'
+      - tag: v0.1.0
+        released: '2026-03-25'
+        notes: Initial release.
+        framework: '>=1.4.0,<1.6.0'
+  - name: kohaku-extensions
+    repo: https://github.com/Kohaku-Lab/kohaku-extensions
+    description: Tool + plugin extensions — additional capabilities for creatures (search providers, file converters, integrations)
+    tags:
+      - tools
+      - plugins
+    author: Kohaku-Blueleaf
+    license: MIT
+    framework: '>=1.5.0,<2.0.0'
+    versions:
+      - tag: v0.1.0
+        released: '2026-04-15'
+        notes: Initial release with extra search providers + file converters.
+        framework: '>=1.5.0,<2.0.0'
+  - name: kt-biome
+    repo: https://github.com/Kohaku-Lab/kt-biome
+    description: Official creature + terrarium pack — SWE, research, music, video, diagrammer, Ralph-loop
+    tags:
+      - creatures
+      - terrariums
+      - examples
+      - official
+    author: Kohaku-Blueleaf
+    license: MIT
+    homepage: https://github.com/Kohaku-Lab/kt-biome
+    framework: '>=1.5.0,<2.0.0'
+    versions:
+      - tag: v0.3.0
+        released: '2026-05-01'
+        notes: 9 creatures, 5 terrariums. Adds ralph_loop terrarium for Huntley-style iterative work.
+        framework: '>=1.5.0,<2.0.0'
+      - tag: v0.2.0
+        released: '2026-04-12'
+        notes: Adds music, video, diagrammer creatures and deep_research terrarium.
+        framework: '>=1.4.0,<1.6.0'
+      - tag: v0.1.0
+        released: '2026-03-20'
+        notes: Initial release with general + swe + researcher creatures.
+        framework: '>=1.4.0,<1.5.0'

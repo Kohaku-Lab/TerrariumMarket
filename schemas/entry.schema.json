@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://terrariummarket.dev/schemas/entry.schema.json",
+  "title": "TerrariumMarket package entry",
+  "description": "Schema for entries/<name>/entry.yaml. See CONTRIBUTING.md for the submission walkthrough.",
+  "type": "object",
+  "required": ["name", "repo", "description", "tags", "author", "license", "framework", "versions"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]{1,38}[a-z0-9]$",
+      "description": "Canonical install id. 3–40 chars, lowercase letters/digits/-/_. Must match the folder name under entries/."
+    },
+    "repo": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://github\\.com/[^/]+/[^/]+/?$",
+      "description": "Public GitHub repo HTTPS URL. github.com only for 1.5; gitlab/codeberg in a future release."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "One-line listing description. Plain text, no markdown."
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]{1,23}[a-z0-9]?$"
+      },
+      "description": "At least one of: creatures, terrariums, plugins, tools. Plus freeform topical tags."
+    },
+    "author": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9-]{1,39}$",
+      "description": "GitHub username of the primary maintainer. Validated against the GitHub API on PR."
+    },
+    "license": {
+      "type": "string",
+      "description": "SPDX licence identifier. See https://spdx.org/licenses/."
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "Optional. Project homepage if different from the GitHub repo."
+    },
+    "framework": {
+      "type": "string",
+      "pattern": "^[><=~^!,. 0-9a-zA-Z*-]+$",
+      "description": "PEP 440 / semver-style constraint on the KohakuTerrarium framework version. e.g. \">=1.5.0,<2.0.0\"."
+    },
+    "versions": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Released versions, NEWEST FIRST.",
+      "items": {
+        "type": "object",
+        "required": ["tag", "released"],
+        "additionalProperties": false,
+        "properties": {
+          "tag": {
+            "type": "string",
+            "pattern": "^v?[0-9]+\\.[0-9]+(\\.[0-9]+)?([.-][A-Za-z0-9.]+)?$",
+            "description": "Git tag in the source repo. Semver-ish; leading 'v' optional."
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{7,40}$",
+            "description": "Resolved by CI from the tag. Submitters may omit it."
+          },
+          "released": {
+            "type": "string",
+            "format": "date",
+            "description": "ISO 8601 date the version was released."
+          },
+          "framework": {
+            "type": "string",
+            "pattern": "^[><=~^!,. 0-9a-zA-Z*-]+$",
+            "description": "Per-version override of the top-level framework constraint, when this release moved."
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Short inline release notes."
+          },
+          "notes_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Link to a longer changelog or GitHub release page."
+          },
+          "yanked": {
+            "type": "boolean",
+            "default": false,
+            "description": "True if this version is withdrawn. CLI still allows explicit `kt install @name@v0.x.y` for reproducibility but skips it in the un-pinned resolver."
+          }
+        }
+      }
+    }
+  }
+}
