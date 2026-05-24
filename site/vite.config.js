@@ -62,6 +62,19 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: false,
+    // Mirror the Cloudflare Pages Function at
+    // functions/api/github/[[path]].js — local dev gets the same
+    // ``/api/github/...`` URL shape so auth.js doesn't need a
+    // dev-vs-prod branch.  Forwards verbatim to github.com (Vite
+    // server-side fetch, no browser CORS).
+    proxy: {
+      "/api/github": {
+        target: "https://github.com",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api\/github/, ""),
+      },
+    },
   },
   build: {
     target: "es2022",

@@ -69,7 +69,12 @@ export const useAuthStore = defineStore("auth", () => {
     errorMessage.value = ""
 
     try {
-      const resp = await fetch("https://github.com/login/device/code", {
+      // ``/api/github/login/device/code`` is the same-origin proxy
+      // handled by functions/api/github/[[path]].js (prod) +
+      // vite.config.js's server.proxy (dev).  Browsers refuse to
+      // call github.com/login/* directly — GitHub's OAuth
+      // endpoints don't send CORS headers.
+      const resp = await fetch("/api/github/login/device/code", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -106,7 +111,7 @@ export const useAuthStore = defineStore("auth", () => {
   async function poll() {
     if (phase.value !== "awaiting_user") return
     try {
-      const resp = await fetch("https://github.com/login/oauth/access_token", {
+      const resp = await fetch("/api/github/login/oauth/access_token", {
         method: "POST",
         headers: {
           Accept: "application/json",
