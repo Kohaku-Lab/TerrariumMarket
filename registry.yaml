@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-05-24T08:21:11.547Z'
+generated: '2026-05-24T17:58:53.029Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -18,12 +18,12 @@ packages:
     author: Kohaku-Lab
     license: LicenseRef-KohakuTerrarium-1.0
     homepage: https://github.com/Kohaku-Lab/kt-biome
-    framework: '>=1.5.0,<2.0.0'
+    framework: '>=1.4.0,<3.0.0'
     versions:
       - tag: main
         released: '2026-05-08'
         notes: Tracking the main branch — no tagged releases yet.  Pin to a specific commit if you need reproducibility.
-        framework: '>=1.5.0,<2.0.0'
+        framework: '>=1.4.0,<3.0.0'
   - name: kt-template
     repo: https://github.com/Kohaku-Lab/kt-template
     description: Starter template for building reusable KohakuTerrarium packages — heavily commented creature, terrarium, and Python-package scaffolds
@@ -36,9 +36,9 @@ packages:
     author: Kohaku-Lab
     license: LicenseRef-KohakuTerrarium-1.0
     homepage: https://github.com/Kohaku-Lab/kt-template
-    framework: '>=1.5.0,<2.0.0'
+    framework: '>=1.4.0,<3.0.0'
     versions:
       - tag: main
         released: '2026-05-24'
         notes: Tracking the main branch — no tagged releases yet.
-        framework: '>=1.5.0,<2.0.0'
+        framework: '>=1.4.0,<3.0.0'

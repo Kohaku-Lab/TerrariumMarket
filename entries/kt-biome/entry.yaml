@@ -5,9 +5,9 @@ tags: [creatures, terrariums, plugins, tools, skills, examples, official]
 author: Kohaku-Lab
 license: LicenseRef-KohakuTerrarium-1.0
 homepage: https://github.com/Kohaku-Lab/kt-biome
-framework: ">=1.5.0,<2.0.0"
+framework: ">=1.4.0,<3.0.0"
 versions:
   - tag: main
     released: "2026-05-08"
     notes: "Tracking the main branch — no tagged releases yet.  Pin to a specific commit if you need reproducibility."
-    framework: ">=1.5.0,<2.0.0"
+    framework: ">=1.4.0,<3.0.0"
