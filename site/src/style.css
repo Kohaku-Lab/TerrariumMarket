@@ -58,6 +58,7 @@ body {
 
 #app {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -137,6 +138,9 @@ html.dark {
 
 .el-dialog {
   --el-dialog-bg-color: var(--el-bg-color-overlay) !important;
+  /* Fixed pixel widths (520px login, 640px new-thread) overflow
+     phone screens — clamp every dialog to the viewport. */
+  max-width: calc(100vw - 2rem);
 }
 
 .el-overlay-message-box .el-message-box,
@@ -235,6 +239,15 @@ html.dark .markdown-body a {
 .markdown-body img {
   max-width: 100%;
   border-radius: 6px;
+}
+
+/* Horizontal-scroll strip without a visible scrollbar — used by the
+   header nav so it degrades gracefully on very narrow screens. */
+.nav-scroll {
+  scrollbar-width: none;
+}
+.nav-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 /* Transitions */

@@ -9,8 +9,8 @@
     </router-link>
 
     <!-- Primary nav -->
-    <nav class="flex items-center gap-0.5 ml-2">
-      <router-link v-for="item in nav" :key="item.name" :to="{ name: item.route }" class="px-2.5 py-1 rounded text-[12px] font-medium transition-colors" :class="isActive(item.route) ? 'bg-iolite/10 text-iolite dark:text-iolite-light' : 'text-warm-600 dark:text-warm-300 hover:bg-warm-100 dark:hover:bg-warm-800'">
+    <nav class="nav-scroll flex items-center gap-0.5 ml-2 min-w-0 overflow-x-auto">
+      <router-link v-for="item in nav" :key="item.name" :to="{ name: item.route }" class="px-2.5 py-1 rounded text-[12px] font-medium transition-colors whitespace-nowrap shrink-0" :class="isActive(item.route) ? 'bg-iolite/10 text-iolite dark:text-iolite-light' : 'text-warm-600 dark:text-warm-300 hover:bg-warm-100 dark:hover:bg-warm-800'">
         {{ item.label }}
       </router-link>
     </nav>

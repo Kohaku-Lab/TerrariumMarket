@@ -9,7 +9,10 @@
     </section>
 
     <!-- Search + filters -->
-    <section class="card p-3 mb-6 flex flex-col md:flex-row md:items-center gap-3 sticky top-[60px] z-20">
+    <!-- Sticky only from md up: on phones the stacked search + chips +
+         sort bar is tall enough to eat most of the viewport if pinned.
+         Offset matches the h-11 header (2.75rem at the 14px root). -->
+    <section class="card p-3 mb-6 flex flex-col md:flex-row md:items-center gap-3 md:sticky md:top-[2.75rem] z-20">
       <div class="relative flex-1">
         <span class="input-icon i-carbon-search text-[15px]" />
         <input v-model="query" type="search" class="input-field !pl-9" :placeholder="`Search ${registry.packages.length || ''} packages…`" />

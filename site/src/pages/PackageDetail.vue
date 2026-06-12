@@ -20,61 +20,66 @@
       </router-link>
 
       <!-- Header card -->
-      <header class="card p-6 mb-6 flex flex-col sm:flex-row gap-6">
-        <div class="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br shadow-sm" :class="gradientClass">
-          <span :class="iconClass" class="text-white text-[28px]" />
-        </div>
-
-        <div class="flex-1 min-w-0">
-          <div class="flex items-start flex-wrap gap-3 mb-2">
-            <h1 class="text-2xl font-semibold text-warm-800 dark:text-warm-200 leading-tight break-all">
-              {{ pkg.name }}
-            </h1>
-            <span v-if="latestVersion" class="font-mono text-sm text-warm-500 dark:text-warm-400 mt-1.5">
-              {{ latestVersion.tag }}
-            </span>
-            <span v-if="isOfficial" class="chip-amber mt-1.5" :title="'Official package'">
-              <span class="i-carbon-checkmark-filled text-[10px]" />
-              official
-            </span>
+      <!-- Icon + text stay one row from sm; the install column only
+           moves beside them at lg — at 640–1024px a fixed 18rem side
+           column squeezed the title/description into ~half the card. -->
+      <header class="card p-4 sm:p-6 mb-6 flex flex-col lg:flex-row gap-5 lg:gap-6">
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 flex-1 min-w-0">
+          <div class="w-16 h-16 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br shadow-sm" :class="gradientClass">
+            <span :class="iconClass" class="text-white text-[28px]" />
           </div>
 
-          <p class="text-warm-600 dark:text-warm-400 text-[14px] leading-relaxed mb-3">
-            {{ pkg.description }}
-          </p>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start flex-wrap gap-3 mb-2">
+              <h1 class="text-2xl font-semibold text-warm-800 dark:text-warm-200 leading-tight break-all">
+                {{ pkg.name }}
+              </h1>
+              <span v-if="latestVersion" class="font-mono text-sm text-warm-500 dark:text-warm-400 mt-1.5">
+                {{ latestVersion.tag }}
+              </span>
+              <span v-if="isOfficial" class="chip-amber mt-1.5" :title="'Official package'">
+                <span class="i-carbon-checkmark-filled text-[10px]" />
+                official
+              </span>
+            </div>
 
-          <div class="flex items-center flex-wrap gap-x-4 gap-y-1 text-[12px] text-warm-500 dark:text-warm-400">
-            <span class="inline-flex items-center gap-1">
-              <span class="i-carbon-user-avatar text-[14px]" />
-              <a :href="`https://github.com/${pkg.author}`" target="_blank" rel="noopener noreferrer" class="hover:text-iolite dark:hover:text-iolite-light font-medium text-warm-700 dark:text-warm-300">
-                {{ pkg.author }}
+            <p class="text-warm-600 dark:text-warm-400 text-[14px] leading-relaxed mb-3">
+              {{ pkg.description }}
+            </p>
+
+            <div class="flex items-center flex-wrap gap-x-4 gap-y-1 text-[12px] text-warm-500 dark:text-warm-400">
+              <span class="inline-flex items-center gap-1">
+                <span class="i-carbon-user-avatar text-[14px]" />
+                <a :href="`https://github.com/${pkg.author}`" target="_blank" rel="noopener noreferrer" class="hover:text-iolite dark:hover:text-iolite-light font-medium text-warm-700 dark:text-warm-300">
+                  {{ pkg.author }}
+                </a>
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <span class="i-carbon-license text-[14px]" />
+                {{ pkg.license }}
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <span class="i-carbon-cube text-[14px]" />
+                framework {{ frameworkConstraint }}
+              </span>
+              <a :href="pkg.repo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-iolite dark:hover:text-iolite-light">
+                <span class="i-carbon-logo-github text-[14px]" />
+                Source
               </a>
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <span class="i-carbon-license text-[14px]" />
-              {{ pkg.license }}
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <span class="i-carbon-cube text-[14px]" />
-              framework {{ frameworkConstraint }}
-            </span>
-            <a :href="pkg.repo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-iolite dark:hover:text-iolite-light">
-              <span class="i-carbon-logo-github text-[14px]" />
-              Source
-            </a>
-            <a v-if="pkg.homepage" :href="pkg.homepage" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-iolite dark:hover:text-iolite-light">
-              <span class="i-carbon-launch text-[14px]" />
-              Homepage
-            </a>
-          </div>
+              <a v-if="pkg.homepage" :href="pkg.homepage" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 hover:text-iolite dark:hover:text-iolite-light">
+                <span class="i-carbon-launch text-[14px]" />
+                Homepage
+              </a>
+            </div>
 
-          <div class="flex flex-wrap gap-1.5 mt-3">
-            <TagBadge v-for="tag in displayTags" :key="tag" :tag="tag" @click="onTagClick" />
+            <div class="flex flex-wrap gap-1.5 mt-3">
+              <TagBadge v-for="tag in displayTags" :key="tag" :tag="tag" @click="onTagClick" />
+            </div>
           </div>
         </div>
 
         <!-- Install column -->
-        <div class="sm:w-72 shrink-0 flex flex-col gap-2 border-t sm:border-t-0 sm:border-l border-warm-200 dark:border-warm-700 pt-4 sm:pt-0 sm:pl-6">
+        <div class="lg:w-72 shrink-0 flex flex-col gap-2 border-t lg:border-t-0 lg:border-l border-warm-200 dark:border-warm-700 pt-4 lg:pt-0 lg:pl-6">
           <label class="text-[11px] uppercase tracking-wider text-warm-500 dark:text-warm-400"> Install </label>
 
           <select v-if="installableVersions.length > 1" v-model="selectedVersionTag" class="input-field !text-[13px] cursor-pointer">
