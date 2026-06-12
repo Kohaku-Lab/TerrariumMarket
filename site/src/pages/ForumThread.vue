@@ -27,19 +27,28 @@
           <span>by {{ thread.author?.login }}</span>
           <span>·</span>
           <span>{{ formatRelative(thread.createdAt) }}</span>
+          <span v-if="thread.upvoteCount > 0" class="inline-flex items-center gap-1">
+            <span class="i-carbon-arrow-up text-[12px]" />
+            {{ thread.upvoteCount }}
+          </span>
+          <span class="inline-flex items-center gap-1">
+            <span class="i-carbon-chat text-[12px]" />
+            {{ thread.comments?.totalCount || 0 }}
+          </span>
         </div>
       </header>
 
       <!-- Original post -->
-      <article class="card p-5 mb-4">
+      <article class="card border-l-3 border-l-iolite/50 dark:border-l-iolite-light/40 p-4 sm:p-5 mb-6">
         <div class="flex items-start gap-3">
           <img v-if="thread.author?.avatarUrl" :src="thread.author.avatarUrl" alt="" class="w-10 h-10 rounded-full shrink-0" />
           <div class="flex-1 min-w-0">
-            <div class="flex items-center gap-2 mb-2 text-[13px]">
-              <a :href="thread.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light">
+            <div class="flex items-center gap-2 flex-wrap mb-2 text-[13px]">
+              <a :href="thread.author?.url" target="_blank" rel="noopener noreferrer" class="font-semibold text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light">
                 {{ thread.author?.login }}
               </a>
-              <span class="text-warm-500 dark:text-warm-400">
+              <span class="chip-iolite !text-[10px] !px-1.5">OP</span>
+              <span class="text-warm-400 dark:text-warm-500">
                 {{ formatRelative(thread.createdAt) }}
               </span>
             </div>
@@ -49,58 +58,20 @@
       </article>
 
       <!-- Comments -->
-      <section class="flex flex-col gap-3 mb-6">
-        <article v-for="c in thread.comments?.nodes || []" :key="c.id" class="card p-5" :class="{ '!border-aquamarine/40': c.isAnswer }">
-          <div class="flex items-start gap-3">
-            <img v-if="c.author?.avatarUrl" :src="c.author.avatarUrl" alt="" class="w-9 h-9 rounded-full shrink-0" />
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 mb-2 text-[13px]">
-                <a :href="c.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-800 dark:text-warm-200 hover:text-iolite dark:hover:text-iolite-light">
-                  {{ c.author?.login }}
-                </a>
-                <span class="text-warm-500 dark:text-warm-400">
-                  {{ formatRelative(c.createdAt) }}
-                </span>
-                <span v-if="c.isAnswer" class="chip-sage">
-                  <span class="i-carbon-checkmark-filled text-[10px]" />
-                  Answer
-                </span>
-              </div>
-              <MarkdownRenderer :source="c.body" />
+      <section class="mb-6">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-warm-700 dark:text-warm-300 mb-3">
+          <span class="i-carbon-chat text-[14px]" />
+          {{ comments.length }} {{ comments.length === 1 ? "comment" : "comments" }}
+        </h2>
 
-              <!-- Nested replies -->
-              <div v-if="c.replies?.nodes?.length" class="mt-4 pt-4 border-t border-warm-200 dark:border-warm-700 flex flex-col gap-4">
-                <div v-for="r in c.replies.nodes" :key="r.id" class="flex items-start gap-2">
-                  <img v-if="r.author?.avatarUrl" :src="r.author.avatarUrl" alt="" class="w-7 h-7 rounded-full shrink-0" />
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 mb-1 text-[12px]">
-                      <a :href="r.author?.url" target="_blank" rel="noopener noreferrer" class="font-medium text-warm-700 dark:text-warm-300 hover:text-iolite dark:hover:text-iolite-light">
-                        {{ r.author?.login }}
-                      </a>
-                      <span class="text-warm-500 dark:text-warm-400">
-                        {{ formatRelative(r.createdAt) }}
-                      </span>
-                    </div>
-                    <MarkdownRenderer :source="r.body" />
-                  </div>
-                </div>
-              </div>
+        <div v-if="comments.length === 0" class="card p-8 flex flex-col items-center text-center gap-2">
+          <span class="i-carbon-chat text-[28px] text-warm-300 dark:text-warm-600" />
+          <p class="text-sm text-warm-500 dark:text-warm-400">No comments yet — be the first to reply.</p>
+        </div>
 
-              <button v-if="auth.signedIn" class="btn-ghost !text-[11px] mt-3" @click="replyParentId = replyParentId === c.id ? null : c.id">
-                <span class="i-carbon-reply text-[11px] mr-1" />
-                {{ replyParentId === c.id ? "Cancel reply" : "Reply" }}
-              </button>
-
-              <div v-if="replyParentId === c.id" class="mt-3 p-3 border border-warm-200 dark:border-warm-700 rounded-lg">
-                <textarea v-model="replyBody" class="input-field min-h-[100px] font-mono text-[13px]" :placeholder="`Reply to ${c.author?.login}…`" />
-                <div class="flex items-center justify-end gap-2 mt-2">
-                  <el-button size="small" @click="replyParentId = null">Cancel</el-button>
-                  <el-button size="small" type="primary" :loading="forum.posting" :disabled="replyBody.trim().length < 1" @click="onPostReply(c.id)"> Post reply </el-button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
+        <div v-else class="flex flex-col gap-3">
+          <ThreadComment v-for="c in comments" :key="c.id" :comment="c" :op-login="thread.author?.login || ''" :discussion-id="thread.id" @posted="reloadThread" />
+        </div>
       </section>
 
       <!-- New top-level comment -->
@@ -135,8 +106,10 @@ import { computed, onMounted, ref, watch } from "vue"
 
 import MarkdownRenderer from "@/components/MarkdownRenderer.vue"
 import LoginModal from "@/components/LoginModal.vue"
+import ThreadComment from "@/components/ThreadComment.vue"
 import { useForumStore } from "@/stores/forum"
 import { useAuthStore } from "@/stores/auth"
+import { formatRelative } from "@/utils/time"
 
 const props = defineProps({
   number: { type: Number, required: true },
@@ -146,11 +119,14 @@ const forum = useForumStore()
 const auth = useAuthStore()
 
 const newBody = ref("")
-const replyBody = ref("")
-const replyParentId = ref(null)
 const loginOpen = ref(false)
 
 const thread = computed(() => forum.currentThread)
+const comments = computed(() => thread.value?.comments?.nodes || [])
+
+function reloadThread() {
+  return forum.loadThread(props.number)
+}
 
 onMounted(() => forum.loadThread(props.number))
 watch(
@@ -163,39 +139,9 @@ async function onPostComment() {
   try {
     await forum.postReply({ discussionId: thread.value.id, body: newBody.value.trim() })
     newBody.value = ""
-    await forum.loadThread(props.number)
+    await reloadThread()
   } catch {
     /* surfaced */
-  }
-}
-
-async function onPostReply(parentId) {
-  if (!thread.value?.id || !replyBody.value.trim()) return
-  try {
-    await forum.postReply({
-      discussionId: thread.value.id,
-      body: replyBody.value.trim(),
-      replyToId: parentId,
-    })
-    replyBody.value = ""
-    replyParentId.value = null
-    await forum.loadThread(props.number)
-  } catch {
-    /* surfaced */
-  }
-}
-
-function formatRelative(iso) {
-  if (!iso) return ""
-  try {
-    const date = new Date(iso)
-    const diff = (Date.now() - date.getTime()) / 1000
-    if (diff < 60) return "just now"
-    if (diff < 3600) return `${Math.round(diff / 60)} min ago`
-    if (diff < 86400) return `${Math.round(diff / 3600)} h ago`
-    return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
-  } catch {
-    return iso
   }
 }
 </script>

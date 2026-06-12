@@ -135,6 +135,25 @@ const SINGLE_DISCUSSION_QUERY = /* GraphQL */ `
                   avatarUrl
                   url
                 }
+                # GitHub currently flattens discussions to two levels
+                # (a reply-to-a-reply lands in the parent's list), so
+                # this comes back empty today — fetched defensively so
+                # the recursive ThreadComment renderer picks up deeper
+                # nesting the moment the API exposes any.
+                replies(first: 10) {
+                  nodes {
+                    id
+                    body
+                    bodyHTML
+                    createdAt
+                    upvoteCount
+                    author {
+                      login
+                      avatarUrl
+                      url
+                    }
+                  }
+                }
               }
             }
           }
