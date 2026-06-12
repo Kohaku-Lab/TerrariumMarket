@@ -148,8 +148,14 @@ watch(
 
 watch(
   () => auth.phase,
-  (p) => {
-    if (p === "ready") {
+  (p, prev) => {
+    // Only a live device-flow completion (exchanging → ready) should
+    // reload.  hydrate() also lands on "ready" at app boot when a
+    // token is already in localStorage — reloading on that transition
+    // made every page load schedule another reload (infinite refresh
+    // for signed-in users), since this modal is always mounted in the
+    // header.
+    if (p === "ready" && prev === "exchanging") {
       emit("done")
       // Brief moment so the user sees the "Signed in as …" state,
       // then hard-reload.  Reloading is the simplest way to make
