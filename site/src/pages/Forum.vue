@@ -54,8 +54,9 @@
       </div>
     </section>
 
-    <!-- Empty -->
-    <section v-else-if="forum.threads.length === 0" class="card p-12 flex flex-col items-center text-center gap-3">
+    <!-- Empty (suppressed while an error card is up — both rendering
+         at once read as "loaded fine and empty", which is wrong) -->
+    <section v-else-if="forum.threads.length === 0 && !forum.errorList" class="card p-12 flex flex-col items-center text-center gap-3">
       <span class="i-carbon-chat text-[40px] text-warm-400 dark:text-warm-600" />
       <h3 class="text-base font-semibold text-warm-700 dark:text-warm-300">No threads yet</h3>
       <p class="text-sm text-warm-500 dark:text-warm-400">Be the first to start a discussion.</p>
