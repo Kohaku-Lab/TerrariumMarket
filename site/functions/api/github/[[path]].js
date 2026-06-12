@@ -35,6 +35,11 @@ const CORS_HEADERS = {
   "Access-Control-Max-Age": "86400",
 }
 
+// Only the two Device Flow endpoints the frontend actually calls.
+// Without this the worker is an open proxy to all of github.com,
+// which invites abuse (and our egress pays for it).
+const ALLOWED_PATHS = new Set(["login/device/code", "login/oauth/access_token"])
+
 export async function onRequest({ request, params }) {
   // CORS preflight — answer immediately with the allow headers.
   if (request.method === "OPTIONS") {
@@ -51,6 +56,18 @@ export async function onRequest({ request, params }) {
       status: 400,
       headers: CORS_HEADERS,
     })
+  }
+  if (!ALLOWED_PATHS.has(path)) {
+    return new Response(
+      JSON.stringify({
+        error: "path_not_allowed",
+        error_description: "This proxy only forwards GitHub Device Flow endpoints.",
+      }),
+      {
+        status: 403,
+        headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+      },
+    )
   }
 
   const url = new URL(request.url)
