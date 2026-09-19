@@ -4,7 +4,7 @@ Debugging and guard plugins for KohakuTerrarium LLM conversations.
 
 ## Overview
 
-This package provides three plugins:
+This package provides five plugins:
 
 - `history_guard`: validate message history integrity before each LLM call.
 - `message_context_logger`: writes full LLM message context to rotating JSONL logs for debugging.
