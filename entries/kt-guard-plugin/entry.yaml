@@ -7,5 +7,5 @@ author: SLAPaper
 license: Apache-2.0
 framework: '>=2'
 versions:
-  - tag: main
+  - tag: v0.5.0
     released: '2026-09-19'
