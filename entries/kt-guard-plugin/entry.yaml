@@ -1,0 +1,11 @@
+name: kt-guard-plugin
+repo: https://github.com/SLAPaper/kt-guard-plugin
+description: Debugging and guard plugins for KohakuTerrarium LLM conversations
+tags:
+  - plugins
+author: SLAPaper
+license: Apache-2.0
+framework: '>=2'
+versions:
+  - tag: main
+    released: '2026-09-19'
