@@ -76,7 +76,10 @@ jobs:
 
       - name: Check no uncommitted registry.yaml drift
         run: |
-          if ! git diff --exit-code registry.yaml; then
+          # build_index.mjs stamps `generated:` with the wall clock, so a
+          # fresh rebuild always differs from the committed file by that one
+          # line — ignore it, or this check could never pass.
+          if ! git diff --exit-code --ignore-matching-lines="^generated:" registry.yaml; then
             echo "::error::registry.yaml is out of date with entries/."
             echo "Run 'npm run build-index' locally and commit the result."
             exit 1
