@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-05-25T05:45:50.823Z'
+generated: '2026-09-19T01:47:18.752Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -24,6 +24,40 @@ packages:
         released: '2026-05-08'
         notes: Tracking the main branch — no tagged releases yet.  Pin to a specific commit if you need reproducibility.
         framework: '>=1.4.0,<3.0.0'
+  - name: kt-biome-extended
+    repo: https://github.com/SLAPaper/kt-biome-extended
+    description: Personal creatures and extensions on top of kt-biome for KohakuTerrarium
+    tags:
+      - creatures
+    author: SLAPaper
+    license: Apache-2.0
+    framework: '>=2.0.0'
+    versions:
+      - tag: v1.1.0
+        released: '2026-09-19'
+  - name: kt-dsh-anchored
+    repo: https://github.com/SLAPaper/kt-dsh-anchored
+    description: Anchored two-phase tool bootstrap for DeepSeek V4 Pro on KohakuTerrarium
+    tags:
+      - creatures
+      - plugins
+    author: SLAPaper
+    license: MIT
+    framework: '>=2.0.0'
+    versions:
+      - tag: v0.3.2
+        released: '2026-09-19'
+  - name: kt-guard-plugin
+    repo: https://github.com/SLAPaper/kt-guard-plugin
+    description: Debugging and guard plugins for KohakuTerrarium LLM conversations
+    tags:
+      - plugins
+    author: SLAPaper
+    license: Apache-2.0
+    framework: '>=2'
+    versions:
+      - tag: v0.5.0
+        released: '2026-09-19'
   - name: kt-template
     repo: https://github.com/Kohaku-Lab/kt-template
     description: Starter template for building reusable KohakuTerrarium packages — heavily commented creature, terrarium, and Python-package scaffolds

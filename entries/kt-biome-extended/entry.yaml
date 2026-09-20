@@ -1,0 +1,11 @@
+name: kt-biome-extended
+repo: https://github.com/SLAPaper/kt-biome-extended
+description: Personal creatures and extensions on top of kt-biome for KohakuTerrarium
+tags:
+  - creatures
+author: SLAPaper
+license: Apache-2.0
+framework: ">=2.0.0"
+versions:
+  - tag: v1.1.0
+    released: "2026-09-19"

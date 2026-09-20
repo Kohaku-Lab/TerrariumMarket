@@ -1,0 +1,12 @@
+name: kt-dsh-anchored
+repo: https://github.com/SLAPaper/kt-dsh-anchored
+description: Anchored two-phase tool bootstrap for DeepSeek V4 Pro on KohakuTerrarium
+tags:
+  - creatures
+  - plugins
+author: SLAPaper
+license: MIT
+framework: ">=2.0.0"
+versions:
+  - tag: v0.3.2
+    released: "2026-09-19"
