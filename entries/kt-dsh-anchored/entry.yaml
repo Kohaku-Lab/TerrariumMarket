@@ -6,7 +6,7 @@ tags:
   - plugins
 author: SLAPaper
 license: MIT
-framework: '>=2.0.0'
+framework: ">=2.0.0"
 versions:
   - tag: v0.3.2
-    released: '2026-09-19'
+    released: "2026-09-19"

@@ -15,10 +15,12 @@ This package provides five plugins:
 ### Message Role Guard
 
 The `MessageRoleGuardPlugin` detects and corrects invalid message ordering in OpenAI-compatible API calls. Many LLM APIs require system messages to be the first element in the conversation, and there should be only ONE system message. During complex multi-turn interactions with sub-agents and tool execution, system messages can accidentally:
+
 - Get placed in the middle of the conversation (not at position 0)
 - Be duplicated (multiple system messages present)
 
 This plugin:
+
 - Detects when system messages are not at position 0, or when there are multiple system messages
 - Logs warnings with diagnostic information
 - Automatically consolidates all system messages into ONE and repositions it at the start (optional)
@@ -41,6 +43,7 @@ The logger is observation-only. It does not rewrite messages, responses, tools, 
 The `QpsThrottlePlugin` delays outgoing LLM calls in `pre_llm_call` before they reach the provider. It is intended to reduce HTTP 429 rate-limit errors by applying backpressure inside a running KohakuTerrarium process.
 
 This plugin:
+
 - Tracks each exact model string independently
 - Shares limiter state across plugin instances in the same Python process
 - Handles parent agents and sub-agents that use the same model through the same limiter key
@@ -52,11 +55,13 @@ This v1 is preventive only. It does not observe already-raised 429 exceptions, r
 ## Installation
 
 ### Via kt CLI (KohakuTerrarium package manager)
+
 ```bash
 kt install https://github.com/SLAPaper/kt-guard-plugin.git
 ```
 
 ### From Local Source (development)
+
 ```bash
 git clone https://github.com/SLAPaper/kt-guard-plugin.git
 cd kt-guard-plugin
@@ -64,6 +69,7 @@ kt install -e .
 ```
 
 ### Programmatic Use
+
 ```bash
 git clone https://github.com/SLAPaper/kt-guard-plugin.git
 cd kt-guard-plugin
@@ -80,7 +86,7 @@ Add to your `config.yaml`:
 plugins:
   - name: message_role_guard
     options:
-      fix: true        # Whether to auto-fix message ordering (default: true)
+      fix: true # Whether to auto-fix message ordering (default: true)
 ```
 
 Debug full LLM context:
@@ -89,11 +95,11 @@ Debug full LLM context:
 plugins:
   - name: message_context_logger
     options:
-      log_on_load: true          # Record plugin load context (default: true)
-      log_pre_llm_call: true     # Record full messages/tools before LLM calls (default: true)
-      log_post_llm_call: true    # Record response/usage after LLM calls (default: true)
-      max_bytes: 10485760        # Rotate after 10 MiB (default)
-      backup_count: 5            # Keep 5 rotated backups (default)
+      log_on_load: true # Record plugin load context (default: true)
+      log_pre_llm_call: true # Record full messages/tools before LLM calls (default: true)
+      log_post_llm_call: true # Record response/usage after LLM calls (default: true)
+      max_bytes: 10485760 # Rotate after 10 MiB (default)
+      backup_count: 5 # Keep 5 rotated backups (default)
 ```
 
 Throttle LLM calls per model:
@@ -109,7 +115,7 @@ plugins:
           qps: 0.5
           burst: 1
       log_wait_threshold_seconds: 0.5
-      max_wait_seconds: 0.0       # 0 means wait as long as needed
+      max_wait_seconds: 0.0 # 0 means wait as long as needed
 ```
 
 ### Programmatic Usage
@@ -160,12 +166,16 @@ agent = Agent.from_path("path/to/creature")
 ## Behavior
 
 ### Detection
+
 The plugin runs in the `pre_llm_call` hook and checks if:
+
 1. Multiple system messages exist in the conversation, OR
 2. System messages exist but are not at position 0
 
 ### Logging
+
 When invalid state is detected, the plugin logs a warning with:
+
 - Agent name
 - Model being called
 - Position(s) of system messages
@@ -196,6 +206,7 @@ Because this is a full-context debug logger, `pre_llm_call` message content and 
 Limiter state is process-local and keyed by the exact model string passed by KohakuTerrarium. Different models do not block each other. Multiple sessions or sub-agents in the same Python process using the same model share one queue.
 
 The limiter uses a token-spacing/GCRA reservation model:
+
 1. Resolve the model key from the hook's `model` kwarg, falling back to plugin load context.
 2. Resolve QPS and burst from `per_model` or defaults.
 3. Reserve a slot under the model's async lock.
@@ -204,6 +215,7 @@ The limiter uses a token-spacing/GCRA reservation model:
 This avoids request bursts that can trigger provider HTTP 429 responses, but it cannot catch a 429 after the provider has already raised it. For full failure recovery, KohakuTerrarium would need an LLM error hook or a provider-level wrapper.
 
 ### Auto-Fix (when enabled)
+
 1. Extracts ALL system messages (there might be multiple)
 2. Combines them with `\n\n` separator into ONE system message
 3. Removes all system messages from their original positions
@@ -224,6 +236,7 @@ See [EXAMPLES.md](EXAMPLES.md) for detailed scenarios including:
 Quick example:
 
 **Before:** Multiple system messages scattered
+
 ```python
 [
   {"role": "system", "content": "Instruction 1"},
@@ -234,6 +247,7 @@ Quick example:
 ```
 
 **After plugin:** Single system message at position 0
+
 ```python
 [
   {"role": "system", "content": "Instruction 1\n\nInstruction 2"},
@@ -245,6 +259,7 @@ Quick example:
 ## Development
 
 ### Local Setup
+
 ```bash
 git clone https://github.com/SLAPaper/kt-guard-plugin.git
 cd kt-guard-plugin
@@ -252,6 +267,7 @@ pip install -e .
 ```
 
 ### Testing
+
 ```bash
 uv run --with pytest pytest
 uv run ruff check kt_guard_plugin tests
@@ -261,6 +277,7 @@ uv run python tests/verification/verify_installation.py
 ```
 
 ### File Structure
+
 ```
 kt-guard-plugin/
 ├── kohaku.yaml           # Package manifest for KohakuTerrarium
@@ -301,13 +318,16 @@ Contributions are welcome! Please open an issue or PR on GitHub.
 ## Troubleshooting
 
 ### Plugin not loading
+
 - Verify `kohaku.yaml` is in the package root
 - Check that the `kt_guard_plugin` package is installed: `pip list | grep kt-guard`
 - Ensure the creature config references one of the registered plugin names: `message_role_guard`, `message_context_logger`, or `qps_throttle`
 
 ### Warnings but no auto-fix
+
 - Check plugin option: `fix: true` in creature config
 - Review logs for why the fix was skipped
 
 ### Messages still out of order
+
 - If using a custom output module or complex flow, check that plugins run in the expected lifecycle hook (`pre_llm_call`)
