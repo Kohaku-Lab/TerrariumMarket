@@ -1,0 +1,14 @@
+name: memcode-kohaku-terrarium
+repo: https://github.com/vivekgupta-memcode/memcode-kohaku-terrarium
+description: Explicit MemCode memory for KohakuTerrarium through a scoped recall tool and human save command
+tags:
+  - tools
+  - memory
+author: vivekgupta-memcode
+license: MIT
+homepage: https://memcode.in
+framework: ">=2.1.4,<3"
+versions:
+  - tag: v0.1.1
+    released: "2026-10-01"
+    notes: Experimental package with automatic Python-module installation. Offline tests and native installation verified; interactive creature smoke testing pending.
