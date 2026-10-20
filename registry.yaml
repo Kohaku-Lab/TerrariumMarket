@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-09-20T16:35:41.812Z'
+generated: '2026-10-20T15:21:43.422Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -35,6 +35,20 @@ packages:
     versions:
       - tag: v1.1.0
         released: '2026-09-19'
+  - name: kt-claude-code
+    repo: https://github.com/Kohaku-Lab/kt-claude-code
+    description: LLM backend that runs model steps through your own signed-in Claude Code (Claude Agent SDK). Personal use; it provides no login of its own.
+    tags:
+      - plugins
+      - llm-backend
+      - claude-code
+    author: KohakuBlueleaf
+    license: Apache-2.0
+    framework: '>2.1.7,<3.0.0'
+    versions:
+      - tag: v0.1.0
+        released: '2026-10-20'
+        notes: 'First release: claude-code backend type with opus / sonnet / haiku presets.'
   - name: kt-dsh-anchored
     repo: https://github.com/SLAPaper/kt-dsh-anchored
     description: Anchored two-phase tool bootstrap for DeepSeek V4 Pro on KohakuTerrarium
