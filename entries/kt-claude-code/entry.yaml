@@ -6,6 +6,9 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">2.1.7,<3.0.0"
 versions:
+  - tag: v0.2.0
+    released: "2026-10-21"
+    notes: "Prompt cache now holds across steps; versioned presets (opus / fable / sonnet / haiku, 5.x) with reasoning and context variations; cleaner tool-result flow."
   - tag: v0.1.0
     released: "2026-10-20"
     notes: "First release: claude-code backend type with opus / sonnet / haiku presets."
