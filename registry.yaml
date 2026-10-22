@@ -1,29 +1,30 @@
 schema_version: 1
-generated: '2026-10-20T17:34:32.140Z'
+generated: '2026-10-22T18:39:37.200Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
 packages:
   - name: kt-biome
     repo: https://github.com/Kohaku-Lab/kt-biome
-    description: Official batteries-included pack — ready-to-run creatures, terrariums, plugins, tools, skill bundles, and examples
+    description: Official creatures, graph recipes, plugins, tools, and skills with bounded explore/critic task helpers
     tags:
       - creatures
       - terrariums
       - plugins
       - tools
       - skills
-      - examples
       - official
     author: Kohaku-Lab
     license: LicenseRef-KohakuTerrarium-1.0
     homepage: https://github.com/Kohaku-Lab/kt-biome
-    framework: '>=1.4.0,<3.0.0'
+    framework: '>2.1.7,<3.0.0'
     versions:
-      - tag: main
-        released: '2026-05-08'
-        notes: Tracking the main branch — no tagged releases yet.  Pin to a specific commit if you need reproducibility.
-        framework: '>=1.4.0,<3.0.0'
+      - tag: v4.0.0
+        commit: 9efe292e0e61fce85614b8a4a68eb5a86988fe96
+        released: '2026-10-22'
+        framework: '>2.1.7,<3.0.0'
+        notes: Bounded explore/critic helpers replace worker/plan delegation in creature presets. Inspection-only tools, smaller budgets, and explicit partial reports; substantial work belongs to graph creatures. Service presets remain available in KT. Supports qualifying post-2.1.7 nightlies.
+        notes_url: https://github.com/Kohaku-Lab/kt-biome/releases/tag/v4.0.0
   - name: kt-biome-extended
     repo: https://github.com/SLAPaper/kt-biome-extended
     description: Personal creatures and extensions on top of kt-biome for KohakuTerrarium
