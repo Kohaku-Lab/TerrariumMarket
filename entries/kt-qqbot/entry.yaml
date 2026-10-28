@@ -1,6 +1,6 @@
 name: kt-qqbot
 repo: https://github.com/Kohaku-Lab/kt-qqbot
-description: Put a creature into QQ private and group chats. QR-code bot login, a qq_feed trigger plus qq_send tool so the creature decides when to speak, stickers and image search, persona image, dashboard settings and chat panel.
+description: Put a creature into QQ private and group chats. QR bot login, a qq_feed trigger and qq_send tool so it decides when to speak, stickers, image search, persona image, dashboard UI.
 tags: [creatures, plugins, tools, qq, chat-bot, ui-extension]
 author: KohakuBlueleaf
 license: Apache-2.0
