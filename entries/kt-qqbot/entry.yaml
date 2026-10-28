@@ -6,6 +6,9 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">2.1.8,<3.0.0"
 versions:
+  - tag: v0.1.3
+    released: "2026-10-29"
+    notes: "Prompt: the creature never replies to, quotes or replays backfill history; it responds only to new chat."
   - tag: v0.1.2
     released: "2026-10-29"
     notes: "Lower latency: inbound images download in parallel with a 5 s per-image timeout (text is never held back), and lower default wake delays (quiet 6 s, cooldown 15 s, every 5 messages, batch 0.5 s)."
