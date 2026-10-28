@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-10-28T15:23:02.422Z'
+generated: '2026-10-28T16:17:23.467Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -90,6 +90,9 @@ packages:
     license: Apache-2.0
     framework: '>2.1.8,<3.0.0'
     versions:
+      - tag: v0.1.1
+        released: '2026-10-29'
+        notes: Fix image search (now uses ddgs; it returned nothing before), fold chat that arrives while the creature is busy into its running turn, prompt tells it to retry searches.
       - tag: v0.1.0
         released: '2026-10-28'
         notes: 'First release: QR / manual login, gateway hub with resume, qq_feed trigger, qq_send / qq_history / qq_sticker / qq_image_search tools, character and persona image, router for one creature per chat, guard plugins, dashboard UI.'
