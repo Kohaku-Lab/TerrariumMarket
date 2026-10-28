@@ -6,6 +6,9 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">2.1.8,<3.0.0"
 versions:
+  - tag: v0.1.2
+    released: "2026-10-29"
+    notes: "Lower latency: inbound images download in parallel with a 5 s per-image timeout (text is never held back), and lower default wake delays (quiet 6 s, cooldown 15 s, every 5 messages, batch 0.5 s)."
   - tag: v0.1.1
     released: "2026-10-29"
     notes: "Fix image search (now uses ddgs; it returned nothing before), fold chat that arrives while the creature is busy into its running turn, prompt tells it to retry searches."
