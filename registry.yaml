@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-10-29T06:53:18.755Z'
+generated: '2026-10-30T10:57:39.835Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -17,8 +17,13 @@ packages:
     author: Kohaku-Lab
     license: LicenseRef-KohakuTerrarium-1.0
     homepage: https://github.com/Kohaku-Lab/kt-biome
-    framework: '>2.1.7,<3.0.0'
+    framework: '>=2.2.0,<3.0.0'
     versions:
+      - tag: v4.1.0
+        commit: b8c042369c307fba574c9256389429e6ef8106c8
+        released: '2026-10-30'
+        framework: '>=2.2.0,<3.0.0'
+        notes: 'Runs on KohakuTerrarium 2.2 (requires >=2.2.0): imports follow the refactored module layout, the PEV verifier resolves its tools through the builtin catalog, and tests mirror kt_biome. Creatures and terrariums are unchanged from 4.0.0.'
       - tag: v4.0.0
         commit: 9efe292e0e61fce85614b8a4a68eb5a86988fe96
         released: '2026-10-22'
@@ -45,13 +50,19 @@ packages:
       - claude-code
     author: KohakuBlueleaf
     license: Apache-2.0
-    framework: '>2.1.7,<3.0.0'
+    framework: '>=2.2.0,<3.0.0'
     versions:
+      - tag: v0.3.0
+        commit: c45777efdfb7f5095a84d23c036d098671d3bf12
+        released: '2026-10-30'
+        notes: 'Runs on KohakuTerrarium 2.2 (requires >=2.2.0): imports follow the refactored llm module layout, unit tests mirror the package, the dev extra installs the Agent SDK, and the README lists the core modules the backend consumes.'
       - tag: v0.2.0
         released: '2026-10-21'
+        framework: '>2.1.7,<3.0.0'
         notes: Prompt cache now holds across steps; versioned presets (opus / fable / sonnet / haiku, 5.x) with reasoning and context variations; cleaner tool-result flow.
       - tag: v0.1.0
         released: '2026-10-20'
+        framework: '>2.1.7,<3.0.0'
         notes: 'First release: claude-code backend type with opus / sonnet / haiku presets.'
   - name: kt-dsh-anchored
     repo: https://github.com/SLAPaper/kt-dsh-anchored
@@ -88,22 +99,31 @@ packages:
       - ui-extension
     author: KohakuBlueleaf
     license: Apache-2.0
-    framework: '>2.1.8,<3.0.0'
+    framework: '>=2.2.0,<3.0.0'
     versions:
+      - tag: v0.2.0
+        commit: b8e968655ddc85105ef686775b969752b0c1304e
+        released: '2026-10-30'
+        notes: 'Runs on KohakuTerrarium 2.2 (requires >=2.2.0): imports follow the refactored module layout, the test guard is built on core''s llm_seam, tests mirror the package, and the resume tests wait for the hub to settle. Earlier releases keep their >2.1.8 range.'
       - tag: v0.1.4
         released: '2026-10-29'
+        framework: '>2.1.8,<3.0.0'
         notes: 'Mentions are sent as plain @name text by default (QQ showed the native tag raw); mention_format: markdown sends real mentions for bots with markdown permission.'
       - tag: v0.1.3
         released: '2026-10-29'
+        framework: '>2.1.8,<3.0.0'
         notes: 'Prompt: the creature never replies to, quotes or replays backfill history; it responds only to new chat.'
       - tag: v0.1.2
         released: '2026-10-29'
+        framework: '>2.1.8,<3.0.0'
         notes: 'Lower latency: inbound images download in parallel with a 5 s per-image timeout (text is never held back), and lower default wake delays (quiet 6 s, cooldown 15 s, every 5 messages, batch 0.5 s).'
       - tag: v0.1.1
         released: '2026-10-29'
+        framework: '>2.1.8,<3.0.0'
         notes: Fix image search (now uses ddgs; it returned nothing before), fold chat that arrives while the creature is busy into its running turn, prompt tells it to retry searches.
       - tag: v0.1.0
         released: '2026-10-28'
+        framework: '>2.1.8,<3.0.0'
         notes: 'First release: QR / manual login, gateway hub with resume, qq_feed trigger, qq_send / qq_history / qq_sticker / qq_image_search tools, character and persona image, router for one creature per chat, guard plugins, dashboard UI.'
   - name: kt-template
     repo: https://github.com/Kohaku-Lab/kt-template
@@ -117,9 +137,10 @@ packages:
     author: Kohaku-Lab
     license: LicenseRef-KohakuTerrarium-1.0
     homepage: https://github.com/Kohaku-Lab/kt-template
-    framework: '>=1.4.0,<3.0.0'
+    framework: '>=2.2.0,<3.0.0'
     versions:
-      - tag: main
-        released: '2026-05-24'
-        notes: Tracking the main branch — no tagged releases yet.
-        framework: '>=1.4.0,<3.0.0'
+      - tag: v0.2.0
+        commit: 3386fa92d3391429c003cb89eeaf1f5af292c25f
+        released: '2026-10-30'
+        framework: '>=2.2.0,<3.0.0'
+        notes: Requires KohakuTerrarium >=2.2.0. Adds pyproject.toml, CI, and a behaviour test per package module plus a manifest check; the creature and terrarium templates build against the current core (removed skill_mode key and think tool dropped).
