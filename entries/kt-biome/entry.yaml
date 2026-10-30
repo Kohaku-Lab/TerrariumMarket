@@ -5,8 +5,13 @@ tags: [creatures, terrariums, plugins, tools, skills, official]
 author: Kohaku-Lab
 license: LicenseRef-KohakuTerrarium-1.0
 homepage: https://github.com/Kohaku-Lab/kt-biome
-framework: ">2.1.7,<3.0.0"
+framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v4.1.0
+    commit: b8c042369c307fba574c9256389429e6ef8106c8
+    released: "2026-10-30"
+    framework: ">=2.2.0,<3.0.0"
+    notes: "Runs on KohakuTerrarium 2.2 (requires >=2.2.0): imports follow the refactored module layout, the PEV verifier resolves its tools through the builtin catalog, and tests mirror kt_biome. Creatures and terrariums are unchanged from 4.0.0."
   - tag: v4.0.0
     commit: 9efe292e0e61fce85614b8a4a68eb5a86988fe96
     released: "2026-10-22"
