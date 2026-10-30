@@ -5,9 +5,10 @@ tags: [creatures, terrariums, examples, template, official]
 author: Kohaku-Lab
 license: LicenseRef-KohakuTerrarium-1.0
 homepage: https://github.com/Kohaku-Lab/kt-template
-framework: ">=1.4.0,<3.0.0"
+framework: ">=2.2.0,<3.0.0"
 versions:
-  - tag: main
-    released: "2026-05-24"
-    notes: "Tracking the main branch — no tagged releases yet."
-    framework: ">=1.4.0,<3.0.0"
+  - tag: v0.2.0
+    commit: 3386fa92d3391429c003cb89eeaf1f5af292c25f
+    released: "2026-10-30"
+    framework: ">=2.2.0,<3.0.0"
+    notes: "Requires KohakuTerrarium >=2.2.0. Adds pyproject.toml, CI, and a behaviour test per package module plus a manifest check; the creature and terrarium templates build against the current core (removed skill_mode key and think tool dropped)."
