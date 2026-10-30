@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v0.2.1
+    commit: bad084f291618e7893c08f12a2093461463db79c
+    released: "2026-10-30"
+    notes: "The router gains wait_idle() so code driving it knows when background chat-creature spawns have finished; the resume tests use it. No behaviour change for a running bot."
   - tag: v0.2.0
     commit: b8e968655ddc85105ef686775b969752b0c1304e
     released: "2026-10-30"
