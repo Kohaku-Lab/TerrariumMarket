@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v0.3.1
+    commit: 7cbac0a4931a9e0a4ccd4f05f1c7a2ba41e2d3f2
+    released: "2026-11-04"
+    notes: 'Fixes "an image in the conversation could not be processed": images in the history, replayed turns and the prompt are resized to the API limits (2000 px each once a step holds more than 20 images, 8000 px otherwise).'
   - tag: v0.3.0
     commit: c45777efdfb7f5095a84d23c036d098671d3bf12
     released: "2026-10-30"
