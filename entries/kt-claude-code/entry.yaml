@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v0.3.2
+    commit: 060c03adf0cbe2d495881625339f9657f06d5b80
+    released: "2026-11-11"
+    notes: "Adds the claude-code-fable-5.2 preset (Claude Fable 5.2); the claude-code-fable alias follows the newest Fable."
   - tag: v0.3.1
     commit: 7cbac0a4931a9e0a4ccd4f05f1c7a2ba41e2d3f2
     released: "2026-11-04"
