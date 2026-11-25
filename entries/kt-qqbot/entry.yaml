@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v0.3.1
+    commit: 5cd5931dd9ac8824ffefbea9a9ff40a90ce278eb
+    released: "2026-11-25"
+    notes: "qq_send accepts sandbox:<name or id>/<path> for a file inside a kt-sandbox sandbox (needs kt-sandbox installed with its manager extra), checks the file's real type against its first bytes, and refuses an unknown media_type with the same message for every handle kind."
   - tag: v0.3.0
     commit: 607c344a883f6a7478fc06d1b85fd100cd37305b
     released: "2026-11-25"
