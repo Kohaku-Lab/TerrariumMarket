@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.4,<3.0.0"
 versions:
+  - tag: v0.1.1
+    commit: d0e4633d247fba99ca0d5ca057b9da74e5b02121
+    released: "2026-11-25"
+    notes: "Registry entries expand ${VAR} and ${VAR:default}. A failed connection now says what is wrong (the HTTP status with a hint, or an unreachable host) instead of an ExceptionGroup."
   - tag: v0.1.0
     commit: f1c3fc53a462679cbc26431c4d2e5b557382254d
     released: "2026-11-25"

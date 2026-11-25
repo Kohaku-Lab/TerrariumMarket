@@ -34,6 +34,21 @@ plugins:
       servers: [sandbox-lab] # attached when the creature starts
 ```
 
+## Registry entries
+
+The plugin connects a server from its entry in the global MCP registry
+(`kt config mcp`). `${VAR}` and `${VAR:default}` in `command`, `args`, `env`,
+`url` and `headers` are read from the environment; an unset `${VAR}` without
+default stops the attach with a message that names the variable.
+
+```yaml
+- name: sandbox-lab
+  transport: streamable_http # stdio for a local command, sse for an older SSE server
+  url: http://127.0.0.1:8765/mcp
+  headers:
+    Authorization: Bearer ${SANDBOX_TOKEN}
+```
+
 ## Use
 
 Only the operator attaches servers; the agent gets no tool for it.
@@ -62,6 +77,11 @@ still act on the local machine. Turn them off with `/module disable <name>`.
 
 ## Failures
 
+- A server that cannot be reached gives one line with the cause and what to
+  check, never header values, for example
+  `MCP server 'web': HTTP 401 Unauthorized from http://127.0.0.1:8765/mcp: check the headers/token`
+  or `... cannot connect to http://127.0.0.1:8765/mcp: All connection attempts failed`.
+  An `sse` entry for a streamable-HTTP server is told to use `streamable_http`.
 - If the server stops answering, a call returns an error that names
   `/mcp-native <server>`. The agent never falls back to the local tools on its
   own; only a detach brings them back.
