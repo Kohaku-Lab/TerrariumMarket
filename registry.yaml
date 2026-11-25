@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-11-25T15:58:15.837Z'
+generated: '2026-11-25T16:13:36.753Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -165,6 +165,22 @@ packages:
         released: '2026-10-28'
         framework: '>2.1.8,<3.0.0'
         notes: 'First release: QR / manual login, gateway hub with resume, qq_feed trigger, qq_send / qq_history / qq_sticker / qq_image_search tools, character and persona image, router for one creature per chat, guard plugins, dashboard UI.'
+  - name: kt-sandbox
+    repo: https://github.com/Kohaku-Lab/kt-sandbox
+    description: Hand files from a kt-sandbox sandbox, local or on another machine, to any tool as sandbox:<server>/<path>; the package of the kt-sandbox project.
+    tags:
+      - plugins
+      - tools
+      - mcp
+      - sandbox
+    author: KohakuBlueleaf
+    license: Apache-2.0
+    framework: '>=2.2.4,<3.0.0'
+    versions:
+      - tag: v0.1.1
+        commit: 4063db007161ef6e1e648c3de3e3d2fa8df4e77e
+        released: '2026-11-26'
+        notes: First listing. The sandbox.files plugin turns sandbox:<MCP server name>/<path> in any tool's file argument into a local copy fetched over the sandbox's HTTP MCP connection (GET /mcp/files with the same token) or through docker exec. Existing sandboxes gain the file route with kt-sandbox upgrade NAME on their host.
   - name: kt-template
     repo: https://github.com/Kohaku-Lab/kt-template
     description: Starter template for building reusable KohakuTerrarium packages — heavily commented creature, terrarium, and Python-package scaffolds
