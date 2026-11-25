@@ -1,0 +1,12 @@
+name: kt-sandbox
+repo: https://github.com/Kohaku-Lab/kt-sandbox
+description: Hand files from a kt-sandbox sandbox, local or on another machine, to any tool as sandbox:<server>/<path>; the package of the kt-sandbox project.
+tags: [plugins, tools, mcp, sandbox]
+author: KohakuBlueleaf
+license: Apache-2.0
+framework: ">=2.2.4,<3.0.0"
+versions:
+  - tag: v0.1.1
+    commit: 4063db007161ef6e1e648c3de3e3d2fa8df4e77e
+    released: "2026-11-26"
+    notes: "First listing. The sandbox.files plugin turns sandbox:<MCP server name>/<path> in any tool's file argument into a local copy fetched over the sandbox's HTTP MCP connection (GET /mcp/files with the same token) or through docker exec. Existing sandboxes gain the file route with kt-sandbox upgrade NAME on their host."
