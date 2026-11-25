@@ -1,5 +1,5 @@
 schema_version: 1
-generated: '2026-11-10T17:10:47.146Z'
+generated: '2026-11-25T04:53:54.038Z'
 source: https://raw.githubusercontent.com/Kohaku-Lab/TerrariumMarket/main/registry.yaml
 maintainers:
   - github: Kohaku-Blueleaf
@@ -109,6 +109,10 @@ packages:
     license: Apache-2.0
     framework: '>=2.2.0,<3.0.0'
     versions:
+      - tag: v0.3.0
+        commit: 607c344a883f6a7478fc06d1b85fd100cd37305b
+        released: '2026-11-25'
+        notes: Chat that does not address the bot is debounced (10 s, shorter with each message, at most 30 s) and a mention flushes it. Quotes carry the quoted text, groups show their name, same-name senders show as Name#id, shared cards show title and images. qq_send splits long text into up to 3 messages, downloads https media itself with size and type checks, and every failure says what to do next. The creature writes plain text with unicode structure instead of markdown.
       - tag: v0.2.1
         commit: bad084f291618e7893c08f12a2093461463db79c
         released: '2026-10-30'
