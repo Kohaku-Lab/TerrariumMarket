@@ -1,0 +1,12 @@
+name: kt-mcp-native-module
+repo: https://github.com/Kohaku-Lab/kt-mcp-native-module
+description: Make a connected MCP server's tools native tools of an agent, attached and detached at runtime by the operator.
+tags: [plugins, tools, mcp, sandbox]
+author: KohakuBlueleaf
+license: Apache-2.0
+framework: ">=2.2.4,<3.0.0"
+versions:
+  - tag: v0.1.0
+    commit: f1c3fc53a462679cbc26431c4d2e5b557382254d
+    released: "2026-11-25"
+    notes: "First release: attach an MCP server's tools as native tools at runtime with /mcp-native; they replace the built-in tools of the same name and restore them on detach. Needs KohakuTerrarium 2.2.4."
