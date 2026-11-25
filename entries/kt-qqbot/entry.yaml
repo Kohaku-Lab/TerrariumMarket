@@ -6,6 +6,10 @@ author: KohakuBlueleaf
 license: Apache-2.0
 framework: ">=2.2.0,<3.0.0"
 versions:
+  - tag: v0.3.2
+    commit: 5c06043ec7961f3b3a9f6f3424b88476c74aec30
+    released: "2026-11-26"
+    notes: "qq_send no longer reads sandbox:<name>/<path> itself (that path only reached a sandbox on the same Docker engine). Install kt-sandbox's sandbox.files plugin instead: it turns sandbox:<MCP server name>/<path> into a local file before qq_send runs, for sandboxes on any machine."
   - tag: v0.3.1
     commit: 5cd5931dd9ac8824ffefbea9a9ff40a90ce278eb
     released: "2026-11-25"
