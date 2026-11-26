@@ -9,7 +9,7 @@ versions:
   - tag: v0.4.0
     commit: 7980b70a1b423ead8b03c851243f6acd3bba3341
     released: "2026-11-26"
-    notes: "Lists the models your signed-in Claude Code CLI reports (aliases such as \"Opus (newest)\" and each exact version, with their effort levels) in KohakuTerrarium's provider models list, read from the CLI handshake without calling a model and cached for ten minutes. A signed-out or missing CLI gives a clear error. Needs KohakuTerrarium 2.2.3 or newer for the list; suggested reasoning presets need a core release after 2.2.4."
+    notes: 'Lists the models your signed-in Claude Code CLI reports (aliases such as "Opus (newest)" and each exact version, with their effort levels) in KohakuTerrarium''s provider models list, read from the CLI handshake without calling a model and cached for ten minutes. A signed-out or missing CLI gives a clear error. Needs KohakuTerrarium 2.2.3 or newer for the list; suggested reasoning presets need a core release after 2.2.4.'
   - tag: v0.3.2
     commit: 060c03adf0cbe2d495881625339f9657f06d5b80
     released: "2026-11-11"
